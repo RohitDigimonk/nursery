@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { FlatList,Text, View, ImageBackground, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { FlatList,Text, View, ImageBackground, Image, TextInput, TouchableOpacity, ScrollView, AsyncStorage } from 'react-native';
 import axios from 'axios';
 // import NurseryDetail from './NurseryDetail';
-
+import SchoolTypeScroll from './SchoolTypeScroll';
 
 class Home extends Component {
      
@@ -11,6 +11,12 @@ class Home extends Component {
         state = {nurseryList: []}
 
         url = "http://203.190.153.20/tinyland//uploads/cover_images/"
+
+        loadSession = async() => {
+          this.setState({
+            userid:await AsyncStorage.getItem('userid')
+          })
+        }
       
 
         componentDidMount=()=>{
@@ -84,46 +90,46 @@ class Home extends Component {
         // <Text key={nurseryList.id}>{nurseryList.address}</Text>
         //     );
         // }
-        renderSchool = ({ item }) => (
-            <View style={Styles.containerStyle}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SchoolDashboard', { item })}>
-            <ImageBackground
-                source={{uri: this.url+item.cover_image}}
-                style={{width: "100%", height: 280}}
-            >
+    //     renderSchool = ({ item }) => (
+    //         <View style={Styles.containerStyle}>
+    //         <TouchableOpacity onPress={() => this.props.navigation.navigate('SchoolDashboard', { item })}>
+    //         <ImageBackground
+    //             source={{uri: this.url+item.cover_image}}
+    //             style={{width: "100%", height: 280}}
+    //         >
 
-                <View style={Styles.detailContainer}>
-                <Text style={Styles.textContainer}>{item.school_name}
-                <Image
-                        source={require('../Images/school_logo.png')}
-                        style={{width: 10, height: 15, marginLeft: 10}}
-                    />
+    //             <View style={Styles.detailContainer}>
+    //             <Text style={Styles.textContainer}>{item.school_name}
+    //             <Image
+    //                     source={require('../Images/school_logo.png')}
+    //                     style={{width: 10, height: 15, marginLeft: 10}}
+    //                 />
                 
-                </Text>
-                <Text style={Styles.textContainer}>
-                    {item.address}
-                <Image
-                    source={require('../Images/location.png')}
-                    style={{width: 10, height: 15, marginLeft: 10}}
-                />
+    //             </Text>
+    //             <Text style={Styles.textContainer}>
+    //                 {item.address}
+    //             <Image
+    //                 source={require('../Images/location.png')}
+    //                 style={{width: 10, height: 15, marginLeft: 10}}
+    //             />
                     
-                </Text>
-                </View>
-                <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginRight: 15}}>
-                    <ImageBackground
-                        source={require('../Images/registration_button.png')}
-                        style={{width: 135, height: 32, bottom: 40, alignItems: 'center', justifyContent: 'center'}}
-                    >
-                        <Text>
-                            {item.registration_open==1?'Registation Open':'Vacation'}
-                        </Text>
+    //             </Text>
+    //             </View>
+    //             <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginRight: 15}}>
+    //                 <ImageBackground
+    //                     source={require('../Images/registration_button.png')}
+    //                     style={{width: 135, height: 32, bottom: 40, alignItems: 'center', justifyContent: 'center'}}
+    //                 >
+    //                     <Text>
+    //                         {item.registration_open==1?'Registation Open':'Vacation'}
+    //                     </Text>
 
-                    </ImageBackground>
-                </View>
-            </ImageBackground>
-            </TouchableOpacity>
-    </View>
-          );
+    //                 </ImageBackground>
+    //             </View>
+    //         </ImageBackground>
+    //         </TouchableOpacity>
+    // </View>
+    //       );
 
     render() {
         // console.log(this.state.nurseryList);
@@ -149,7 +155,7 @@ class Home extends Component {
                     <View style={{width: '80%', height: 40, borderWidth: 1, borderRadius: 10, marginLeft: 10, flexDirection: 'row'}}>
                         <Image
                             source={require('../Images/Search.png')}
-                            style={{width: 30, height: 19, marginTop: 7, marginLeft: 10, marginRight: 10}}
+                            style={{width: 45, height: 30, marginTop: 7, marginLeft: 10, marginRight: 10}}
                         />
                         <TextInput
                             style={{width:'80%', fontSize: 17,}}
@@ -169,14 +175,15 @@ class Home extends Component {
                         <Text style={{fontSize: 22}}>Nurseries</Text>
                         
                     </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-around'}}> 
+                    
+                    <SchoolTypeScroll data={this.state.nurseryList} />
+                    
+                    {/* <View style={{flexDirection: 'row', justifyContent: 'space-around'}}> 
                         <Text style={{color: '#35c3c4'}}>All</Text>
                         <Text style={{color: '#35c3c4'}}>British</Text>
                         <Text style={{color: '#35c3c4'}}>Three-language nurseried</Text>
-                    </View>
-        <ScrollView
-        
-        >   
+                    </View> */}
+        {/* <ScrollView>   
         <View style={{marginTop: 10}}>
         <FlatList
           vertical
@@ -187,35 +194,35 @@ class Home extends Component {
           keyExtractor={item => `${item.id}`}
         />
         </View>
-        </ScrollView>
+        </ScrollView> */}
         </ImageBackground>
         );
     }
 }
 
-const Styles = {
-    containerStyle: {
-        marginTop: 20, 
-        marginBottom: 20,
-        marginLeft: 5,
-        marginRight: 5,
-        borderWidth: 1,
-        borderRadius: 5,
+// const Styles = {
+//     containerStyle: {
+//         marginTop: 20, 
+//         marginBottom: 20,
+//         marginLeft: 5,
+//         marginRight: 5,
+//         borderWidth: 1,
+//         borderRadius: 5,
         
-    },
-    detailContainer: {
-        paddingLeft: 20,
-        height: '100%',
-        justifyContent: 'flex-end',
+//     },
+//     detailContainer: {
+//         paddingLeft: 20,
+//         height: '100%',
+//         justifyContent: 'flex-end',
         
              
         
-    },
-    textContainer: {
-        fontSize: 20,
-        paddingBottom: 2,
+//     },
+//     textContainer: {
+//         fontSize: 20,
+//         paddingBottom: 2,
         
-    }
-}
+//     }
+// }
 
 export default Home;

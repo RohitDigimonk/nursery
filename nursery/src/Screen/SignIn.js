@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, ImageBackground, Image, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import Button from '../common/Button';
 import axios from 'axios';
 
@@ -19,11 +19,16 @@ class SignIn extends Component {
         }).then((response)=>{
             console.log(response);
             const data = response['data']
+            const dataa = data['data']
+            const userid = dataa['id']
             const message = data['message']
             const status = data['status']
 
+            this.setState({
+                userid:userid
+            })
             if(status==1){
-                this.props.navigation.navigate('Home');
+                this.session()
             }
             else{
                 alert(message);
@@ -32,13 +37,16 @@ class SignIn extends Component {
         }).catch(function (error){
             console.log(error);
         })
+        
     }
-    // session=()=>{
-    //     this.props.navigation.navigate('Home');
-    // }
+   
+    session=()=>{
+        AsyncStorage.setItem('userid',this.state.userid)
+        this.props.navigation.navigate('Home');
+    }
 
     render(){
-        // console.log(message);
+        // console.log(this.state.userid);
         return(
             <ImageBackground
                 source={require('../Images/background_qtr.png')}

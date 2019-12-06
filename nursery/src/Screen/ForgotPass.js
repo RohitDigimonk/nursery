@@ -1,8 +1,32 @@
 import React, { Component } from 'react';
 import { Text, View, ImageBackground, TextInput, Image } from 'react-native';
 import Button from '../common/Button';
+import axios from 'axios';
 
 class ForgotPass extends Component {
+    state = {email: ''}
+
+    resetpassword = () => {
+            const {email} = this.state
+
+            axios.post('http://203.190.153.20/tinyland/api/Api/forgot_password ', {
+            email: email
+        }).then((response)=>{
+            // console.log(response)
+            const data = response['data']
+            const status = data['status']
+            const message = data['message']
+            // console.log(message);
+            if(status==1){
+                alert(message);
+                this.props.navigation.navigate('SignIn')
+
+            }
+            else{
+                alert(message);
+            }
+        })
+    }
     render(){
         return(
             <ImageBackground
@@ -18,6 +42,8 @@ class ForgotPass extends Component {
                     <TextInput
                         style={{width: '80%'}}
                         placeholder="Email ID"
+                        value={this.state.email}
+                        onChangeText={email => this.setState({ email })}
 
                     />
                     <Image
@@ -26,7 +52,7 @@ class ForgotPass extends Component {
                     />
                 </View>
                 <View style={{top: "15%"}}>
-                <Button onPress={() => this.props.navigation.navigate('SignIn')}>
+                <Button onPress={this.resetpassword}>
                         Reset
                     </Button>
                 </View>

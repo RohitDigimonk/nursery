@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, ImageBackground, Image, TouchableOpacity, ScrollView } from 'react-native';
 import ScrollBar from './ScrollBar';
-import AboutUs from './AboutUs';
 import Carousel from 'react-native-snap-carousel';
 
 
@@ -44,12 +43,12 @@ class SchoolDashboard extends Component {
             );
         }
         renderitem = ({ item }) => (
-            <View style={{justifyContent: 'center', alignItems: 'center', flex:1, backgroundColor:"#000", height: 300}}>
+            <View style={{justifyContent: 'center', alignItems: 'center', flex:1, height: 300, paddingRight: 5, }}>
                 
         <ImageBackground
         style={{height: 300, width: 400}}
         source={{uri:this.slider+item.otherimage}}>
-        <Text>Image</Text>
+        
         </ImageBackground>
         {/* // >{this.slider+item.otherimage}</image> */}
         </View>
@@ -71,34 +70,43 @@ class SchoolDashboard extends Component {
 
         return(
             <View style={{flex: 1}}>
-            {/* <ImageBackground
-                source={{uri: this.url+this.nurseryList.cover_image}}
-                style={{width: "100%", height: 300}}
+            <ImageBackground
+            source={require('../Images/background.png')}
+            style={{width: "100%", height: "100%"}}
             >
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
-                <Image
-                    source={require('../Images/back.png')}
-                    style={{width: 19, height: 33, top: 5, left: 10}}
-                />
-        
-                </TouchableOpacity>
-                </ImageBackground> */}
-                <Carousel
+            <ImageBackground
+            source={require('../Images/topheader.png')}
+            style={{width: 429, height: 47}}
+            >
+            <View>
+            <TouchableOpacity
+            style={{width: 19, height: 33}}
+            onPress={() => this.props.navigation.goBack()}>
+            <Image
+            source={require('../Images/back.png')}
+            style={{width: 19, height: 33, top: 10, marginLeft: 10}}
+            /> 
+            </TouchableOpacity>
+            </View>
+            
+            </ImageBackground>
+                
+            
+            <Carousel
           ref={(c) => { this._carousel = c; }}
           data={this.other_images}
           renderItem={this.renderitem}
           sliderWidth={420}
           itemWidth={420}
+          
         />
                 
                 
                 <ScrollBar data={this.nurseryList} />
                 
-                {/* <AboutUs>
-                {this.rendernurseryid()}
-                </AboutUs> */}
+                </ImageBackground>
                 </View>
-            
+                
       
             
          

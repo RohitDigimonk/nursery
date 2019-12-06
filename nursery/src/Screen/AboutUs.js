@@ -38,7 +38,7 @@ class AboutUs extends Component {
         // console.log(this.props.children);
         return(
             <ScrollView>
-            <View style={{marginTop: 10, marginBottom: 10}}>
+            <View style={{marginTop: 10, marginBottom: 10, marginHorizontal: 5}}>
               <Text style={{textAlign: 'justify'}}>  {this.props.data['about_school']} </Text>
             </View>
             <View>

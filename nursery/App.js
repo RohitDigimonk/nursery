@@ -14,6 +14,10 @@ import ContactUs from './src/Screen/ContactUs';
 import Why from './src/Screen/Why';
 import Services from './src/Screen/Why';
 import Terms from './src/Screen/Terms';
+import UpdateProfile from './src/Screen/UpdateProfile';
+import ChangePassword from './src/Screen/ChangePassword';
+import Logout from './src/Screen/Logout';
+
 
 // const {height} = Dimensions.get('window')
 const AppNavigator = createStackNavigator({
@@ -65,7 +69,7 @@ const AppNavigator = createStackNavigator({
 },
   
 {
-  initialRouteName: 'Home'
+  initialRouteName: 'SignIn'
 }
 )
 
@@ -131,6 +135,27 @@ const DrawerNav = createDrawerNavigator({
       title: 'Contact us'
     }
   },
+
+  UpdateProfile: {
+    screen: UpdateProfile,
+    navigationOptions: {
+      title: 'Update Profile'
+    }
+  },
+
+  ChangePassword: {
+    screen: ChangePassword,
+    navigationOptions: {
+      title: 'Change Password'
+    }
+  },
+
+  Logout: {
+    screen: Logout,
+    navigationOptions: {
+      title: 'Logout'
+    }
+  }
 
 //   // Terms & Conditions: Conditions,
 //   // Services: SerVices,
