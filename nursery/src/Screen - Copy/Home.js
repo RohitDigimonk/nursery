@@ -65,12 +65,9 @@ class Home extends Component {
         
 
           handleSearch = text => {
-            // alert(text)
-            
             var recipeArray1 = this.getRecipesByRecipeName(text);
             // var recipeArray2 = getRecipesByCategoryName(text);
             // var recipeArray3 = getRecipesByIngredientName(text);
-            // alert(recipeArray1)
             var aux = recipeArray1
             var schoolArray = [...new Set(aux)];
             if (text == '') {
@@ -88,11 +85,11 @@ class Home extends Component {
 
        
 
-        renderList () {
-        return this.state.nurseryList.map(nurseryList => 
-        <Text key={nurseryList.id}>{nurseryList.address}</Text>
-            );
-        }
+        // renderList () {
+        // return this.state.nurseryList.map(nurseryList => 
+        // <Text key={nurseryList.id}>{nurseryList.address}</Text>
+        //     );
+        // }
     //     renderSchool = ({ item }) => (
     //         <View style={Styles.containerStyle}>
     //         <TouchableOpacity onPress={() => this.props.navigation.navigate('SchoolDashboard', { item })}>
@@ -179,7 +176,7 @@ class Home extends Component {
                         
                     </View>
                     
-                    <SchoolTypeScroll data={this.state.nurseryList}  />
+                    <SchoolTypeScroll data={this.state.nurseryList} />
                     
                     {/* <View style={{flexDirection: 'row', justifyContent: 'space-around'}}> 
                         <Text style={{color: '#35c3c4'}}>All</Text>

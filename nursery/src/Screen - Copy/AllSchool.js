@@ -6,8 +6,6 @@ import axios from 'axios';
 
 class AllSchool extends Component{
 
-  data = this.props.data
-
     state = {nurseryList: []}
 
         url = "http://203.190.153.20/tinyland//uploads/cover_images/"
@@ -15,23 +13,23 @@ class AllSchool extends Component{
 
         componentDidMount=()=>{
            
-            // axios.post('http://203.190.153.20/tinyland/api/Api/nurseryList' )
-            // .then((response) => {
+            axios.post('http://203.190.153.20/tinyland/api/Api/nurseryList' )
+            .then((response) => {
                 
-            //     // console.log(response.data)
-            //     const album = response.data
-            //     var newalbum = album.data
-            //     //const data = response.data
-            //     // console.log(newalbum.length);
+                // console.log(response.data)
+                const album = response.data
+                var newalbum = album.data
+                //const data = response.data
+                // console.log(newalbum.length);
                 
-            //     this.setState({
-            //         nurseryList:newalbum
-            //     })
-            //     this.setState({
-            //         data:newalbum
-            //     })
+                this.setState({
+                    nurseryList:newalbum
+                })
+                this.setState({
+                    data:newalbum
+                })
                  
-            // })
+            })
             
         }
 
@@ -135,7 +133,7 @@ class AllSchool extends Component{
               vertical
               showsVerticalScrollIndicator={false}
               numColumns={1}
-              data={this.props.data}
+              data={this.state.nurseryList}
               renderItem={this.renderSchool}
               keyExtractor={item => `${item.id}`}
             />

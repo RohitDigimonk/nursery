@@ -11,7 +11,7 @@ import Montessori from './Montessori';
 
 class SchoolTypeScroll extends Component{
     render(){
-        // console.log()
+        // console.log(this.props.data)
         return(
             
             <ScrollableTabView
@@ -21,7 +21,7 @@ class SchoolTypeScroll extends Component{
                     // style={{backgroundColor: "lightgrey"}}
                 />}
           >
-            <AllSchool tabLabel='All' data={this.props.data} />
+            <AllSchool tabLabel='All' />
             
             <Bilingual tabLabel='Bilingual' data={this.props.data} />
             <Islamic tabLabel='Islamic' data={this.props.data}/>
