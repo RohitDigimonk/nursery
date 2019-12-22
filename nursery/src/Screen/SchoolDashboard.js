@@ -1,31 +1,51 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, ImageBackground, Image, TouchableOpacity, AsyncStorage} from 'react-native';
 import ScrollBar from './ScrollBar';
 import Carousel from 'react-native-snap-carousel';
-
+import axios from 'axios';
 
 class SchoolDashboard extends Component {
-    state = {nurseryList: [], renderData: []}
+    state = {nurseryList: [], renderData: [], nurseryid: ''}
 
     
-        
-    
-
-
-    componentDidMount=()=>{
+    loadSession = async() => {
+        this.setState({
+          userid:await AsyncStorage.getItem('userid')
+        })
         this.setState({
             nurseryList:this.props.navigation.state.params.item
+            
+        }) 
+        this.setState({
+            nurseryid:this.state.nurseryList['id']
         })
-        
-    }
+        // console.log({ user_id : this.state.userid,
+        //     nursery_id : this.state.nurseryid})
 
+        axios.post('https://digimonk.co/tinyland/api/Api/getVisitorInfo',{
+           
+            user_id : this.state.userid,
+            nursery_id : this.state.nurseryid
+        }).then((response)=>{
+            console.log(response);
+        })
+      }
+    
+    
+
+    componentDidMount=()=>{
+        this.loadSession().done();
+           
+    }
+    
+    
 
     nurseryList= this.props.navigation.state.params.item
-    url = "http://203.190.153.20/tinyland//uploads/cover_images/"
+    url = "https://digimonk.co/tinyland//uploads/cover_images/"
 
-    slider = "http://203.190.153.20/tinyland/uploads/other_images/"
+    slider = "https://digimonk.co/tinyland/uploads/other_images/"
    
-
+    
     //  rendernurseryid=()=> {
     //     // console.log(this.nurseryList)
     //     return <AboutUs data={this.nurseryList} />
@@ -47,7 +67,9 @@ class SchoolDashboard extends Component {
                 
         <ImageBackground
         style={{height: 300, width: 400}}
-        source={{uri:this.slider+item.otherimage}}>
+        source={{uri:this.slider+item.otherimage}}
+        resizeMode= 'contain'
+        >
         
         </ImageBackground>
         {/* // >{this.slider+item.otherimage}</image> */}
@@ -66,7 +88,7 @@ class SchoolDashboard extends Component {
    render(){
     
     
-    // console.log(this.other_images);    
+    // console.log(this.state.nurseryid);    
 
         return(
             <View style={{flex: 1}}>
@@ -80,11 +102,10 @@ class SchoolDashboard extends Component {
             >
             <View>
             <TouchableOpacity
-            style={{width: 19, height: 33}}
             onPress={() => this.props.navigation.goBack()}>
             <Image
             source={require('../Images/back.png')}
-            style={{width: 19, height: 33, top: 10, marginLeft: 10}}
+            style={{width: 19, height: 33, marginTop: 10, marginLeft: 10}}
             /> 
             </TouchableOpacity>
             </View>
@@ -96,8 +117,8 @@ class SchoolDashboard extends Component {
           ref={(c) => { this._carousel = c; }}
           data={this.other_images}
           renderItem={this.renderitem}
-          sliderWidth={420}
-          itemWidth={420}
+          sliderWidth={390}
+          itemWidth={410}
           
         />
                 

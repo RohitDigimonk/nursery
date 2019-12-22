@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { Text, View, ImageBackground, Image, ScrollView } from 'react-native';
+import { Text, View, ImageBackground, Image, ScrollView, Linking, TouchableOpacity } from 'react-native';
+
 
 
 class AboutUs extends Component {
     //     state = {AboutUs: []}
     // componentDidMount=()=>{
-    //     Axios.post('http://203.190.153.20/tinyland/api/Api/aboutusByID/',{
+    //     Axios.post('https://digimonk.co/tinyland/api/Api/aboutusByID/',{
     //         id: 77
     //     })
     //     .then((response) =>{
@@ -22,6 +23,7 @@ class AboutUs extends Component {
     methodology = this.data['methodology']
     mapUrl = this.data['mapUrl']
     social = this.data['social']
+    mapLink = this.data['mapLink']
     instagram=""
     // instagram = this.social.split(',')
 
@@ -38,13 +40,13 @@ class AboutUs extends Component {
         // console.log(this.props.children);
         return(
             <ScrollView>
-            <View style={{marginTop: 10, marginBottom: 10, marginHorizontal: 5}}>
-              <Text style={{textAlign: 'justify'}}>  {this.props.data['about_school']} </Text>
+            <View style={{marginTop: 10, marginBottom: 10, paddingLeft: 5, paddingRight: 5}}>
+              <Text style={{textAlign: 'justify',fontFamily : 'Poppins',marginRight:5}}>  {this.props.data['about_school']} </Text>
             </View>
             <View>
                {
                    this.instagram.map(value =>
-                    <Text>{value=='0'?"":value}</Text>
+                    <Text style={{textAlign: 'justify', marginLeft: 10,fontFamily : 'Poppins'}}>{value=='0'?"":value}</Text>
                    )
                }
             </View>
@@ -137,18 +139,21 @@ class AboutUs extends Component {
                     source={require('../Images/black.png')}
                     style={{width: 200, height: 55, justifyContent: 'center', alignItems: 'center'}}
                 >
-                    
+                    <ScrollView>
                     <Text style={Styles.textstyle}>
                         {this.methodology}
                     </Text>
+                    </ScrollView>
                 </ImageBackground>
                 </View>
+                <TouchableOpacity onPress={()=> Linking.openURL(this.mapLink)}>
                 <View style={{marginTop: 10}}>
                     <Image
                     source={{uri: this.mapUrl }}
                     style = {{width: "100%", height: 300 }}
                     />
                 </View>
+                </TouchableOpacity>
             </ScrollView>
         );
     }
@@ -157,7 +162,9 @@ class AboutUs extends Component {
 const Styles = {
     textstyle : {
         color: '#ffffff',
-        fontSize: 18
+        fontSize: 18,
+        marginLeft: 2,
+        fontFamily : 'Poppins'
 
 
     },

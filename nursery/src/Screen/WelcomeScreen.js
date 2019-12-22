@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
-import { Image, View, ImageBackground } from 'react-native';
+import { Image, View, ImageBackground, AsyncStorage} from 'react-native';
 import Button from '../common/Button';
+import { StackActions, NavigationActions} from 'react-navigation';
 
 class LaunchScreen extends Component {
+
+    //  async componentDidMount() {
+    //     console.log(await AsyncStorage.getItem('userid'))
+    //   }
+    
+    //   componentWillUnmount() {
+    //     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+    //   }
+    
+    //   onBackPress = () => {
+    //     return true; 
+    //   }
+
     render() {
         return(
             <ImageBackground source={require('../Images/background_half.png')} 
@@ -14,7 +28,12 @@ class LaunchScreen extends Component {
                 />                
             </View>
             <View style={Styles.ButtonView}>
-            <Button onPress={() => this.props.navigation.navigate('SignIn')}>
+            <Button onPress={() => this.props.navigation.dispatch(StackActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'Home' })
+            ],
+          }))}>
                 Let's Go
             </Button>
             </View>

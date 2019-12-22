@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { StackActions, NavigationActions} from 'react-navigation';
 import {Text,View, ImageBackground, Image, TouchableOpacity, ScrollView, TextInput, AsyncStorage} from 'react-native';
 import Button from '../common/Button';
 
@@ -16,14 +17,33 @@ class ChangePassword extends Component{
         const {opassword} = this.state;
         const {password} = this.state;
         const {cpassword} = this.state;
-
+        // console.log(JSON.stringify({
+           
+        //     id: this.state.userid,
+         
+        //     current_password: opassword,
+         
+        //     new_password: password,
+        
+            
+                       
+        //   })
+        //  )
+        if(password==''){
+            alert('password is required');
+        }
+        else if(password!=cpassword){
+            alert('confirm password is not matched');
+        }
+       else{
        
-        fetch('http://203.190.153.20/tinyland/api/Api/updatePassword', {
+        fetch('https://digimonk.co/tinyland/api/Api/updatePassword', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
+            
             body: JSON.stringify({
            
               id: this.state.userid,
@@ -44,12 +64,23 @@ class ChangePassword extends Component{
                  })
 
         //   Showing response message coming from server after inserting records.
-                  alert(this.state.data['message'])
-           
+        if(this.state.data['status']==1){
+            alert(this.state.data['message'])
+            this.props.navigation.dispatch(StackActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({ routeName: 'ChangePassword' })
+                ],
+              }))
+        }
+                else{
+                    alert(this.state.data['message'])
+                }
+                
                 }).catch((error) => {
                   console.error(error);
                 });
-                                 
+       }                     
     }
     
     componentDidMount(){
@@ -64,10 +95,10 @@ class ChangePassword extends Component{
             <TouchableOpacity  onPress={() => this.props.navigation.toggleDrawer()}>
             <Image
             source={require('../Images/more.png')}
-            style={{height: 23, width: 29, marginLeft: 10, top: 20}}
+            style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
             />
             </TouchableOpacity>
-            <ScrollView style={{marginTop: '10%'}}>
+            <ScrollView keyboardShouldPersistTaps='always' style={{marginTop: '5%'}}>
             <View style={{marginTop: 40}}>
             <View style={Styles.containerStyle}>
                 <TextInput

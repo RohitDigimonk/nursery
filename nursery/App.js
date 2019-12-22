@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Image, Text, ScrollView, SafeAreaView, Dimensions, View, ImageBackground} from 'react-native';
 import { createAppContainer, withNavigation} from 'react-navigation';
 import { createStackNavigator, HeaderTitle } from 'react-navigation-stack';
 import WelcomeScreen from './src/Screen/WelcomeScreen';
@@ -17,7 +16,8 @@ import Terms from './src/Screen/Terms';
 import UpdateProfile from './src/Screen/UpdateProfile';
 import ChangePassword from './src/Screen/ChangePassword';
 import Logout from './src/Screen/Logout';
-
+import DrawerContainer from './src/Screen/DrawerContainer'
+import OtpRegistration from './src/Screen/OtpRegistration';
 
 // const {height} = Dimensions.get('window')
 const AppNavigator = createStackNavigator({
@@ -64,126 +64,96 @@ const AppNavigator = createStackNavigator({
     navigationOptions: {
       header: null
     }
-  } 
-
-},
-  
-{
-  initialRouteName: 'SignIn'
-}
-)
-
-const CustomDrawerComponent = (props) => (
-    <ImageBackground
-    source={require('./src//Images/background_full.png')}
-    style={{width: "100%", height: "100%"}}
-    >
-      <SafeAreaView style={{}}>
-        <View style={{height: 150, alignItems: 'center', justifyContent: 'center'}}>
-          <Image
-          style={{width: 150, height: 150, resizeMode: 'contain'}}
-          source={require('./src//Images/logo.png')}
-          />
-          
-        </View>
-        <ScrollView>
-          <DrawerItems {...props}
-          
-          />
-        </ScrollView>
-      </SafeAreaView>
-      </ImageBackground>
-)
-
-const DrawerNav = createDrawerNavigator({
-  
-  Home: AppNavigator,
-  // School:{ 
-  //   screen: SchoolDashboard,
-  //   navigationOptions: ({navigation}) => ({
-  //     drawerLabel: 'School Dashboard',
-  //     drawerIcon: () => {
-  //       <Image
-  //         source={require('./src/Images/logo.png')}
-  //         style={{width:30,height:30}}
-  //       />
-  //     }
-  //   })
+  } ,
+  ChangePassword: {
+    screen: ChangePassword,
+    navigationOptions: {
+     header:null
+    }
+  },
+  OtpRegistration: {
+    screen: OtpRegistration,
+    navigationOptions: {
+     header:null
+    }
+  },
+  // UpdateProfile: {
+  //   screen: UpdateProfile,
+  //   navigationOptions: {
+  //     header: null
+  //   }
   // },
   Terms: {
     screen: Terms,
     navigationOptions: {
-      title: 'Terms & Conditions'
+      title: 'Terms & Conditions',
+      header:null
     }
   },
   Services: {
     screen: Services,
     navigationOptions: {
-      title: 'Our services to our partners'
+      title: 'Our services to our partners',
+      header:null
     }
   },
   Why: {
     screen: Why,
     navigationOptions: {
-      title: 'Why my nursery'
+      title: 'Why my nursery',
+      header:null
     }
 
   },
   ContactUs: {
     screen: ContactUs,
     navigationOptions: {
-      title: 'Contact us'
+      title: 'Contact us',
+      header:null
     }
   },
 
   UpdateProfile: {
     screen: UpdateProfile,
     navigationOptions: {
-      title: 'Update Profile'
+      title: 'Update Profile',
+      header:null
     }
   },
 
-  ChangePassword: {
-    screen: ChangePassword,
-    navigationOptions: {
-      title: 'Change Password'
-    }
-  },
+  // ChangePassword: {
+  //   screen: ChangePassword,
+  //   navigationOptions: {
+  //     title: 'Change Password'
+  //   }
+  // },
 
-  Logout: {
-    screen: Logout,
-    navigationOptions: {
-      title: 'Logout'
-    }
-  }
+},
 
-//   // Terms & Conditions: Conditions,
-//   // Services: SerVices,
-//   // Why My Nursery: MyNursery,
-//   // Contact Us: Contact,
-//   // Direct Conversations: Direct,
   
-// },{
-//     drawerWidth: 350,
-//     drawerPosition: 'left',
-//     contentOptions:{
-//       activeBackgroundColor: 'grey',
-      
-      
-//     }
-    
-}, {
-  contentComponent: CustomDrawerComponent,
-  drawerWidth: "80%",
-  // drawerType: 'slide',
-  // drawerHeight: height,
-  contentOptions:{
-    activeTintColor: 'orange'
+{
+  initialRouteName: 'WelcomeScreen'
+}
+)
+
+// const CustomDrawerComponent = (props) => (
+//    
+// )
+
+const DrawerStack  = createDrawerNavigator(
+  {
+    Main: AppNavigator
+  },
+  {
+    drawerPosition: 'left',
+    drawerType: "slide",
+    initialRouteName: 'Main',
+    drawerWidth: 280,
+    contentComponent: DrawerContainer
   }
-
-})
-
+);
 
 
 
-export default createAppContainer(DrawerNav);
+
+export default createAppContainer(DrawerStack);

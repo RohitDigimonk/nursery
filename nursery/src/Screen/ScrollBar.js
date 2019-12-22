@@ -12,6 +12,7 @@ class ScrollBar extends Component{
             
             <ScrollableTabView
             style={{marginTop: 20}}
+            tabBarTextStyle={{fontFamily : 'Poppins'}}
             initialPage={0}
             renderTabBar={() => <ScrollableTabBar
                     style={{backgroundColor: "lightgrey"}}

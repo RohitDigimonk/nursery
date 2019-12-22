@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { Text, View, ImageBackground, Image, TextInput, TouchableOpacity, AsyncStorage, ScrollView } from 'react-native';
 import Button from '../common/Button';
+import { StackActions, NavigationActions} from 'react-navigation';
 import axios from 'axios';
 
 class SignIn extends Component {
 
+    
     state = { email: '', password: ''};
     
     login = () => {
         const {email} = this.state;
         const {password} = this.state;
 
-        axios.post('http://203.190.153.20/tinyland/api/Api/login', {
+        axios.post('https://digimonk.co/tinyland/api/Api/login', {
               
               email: email,
               password: password
@@ -59,13 +61,18 @@ class SignIn extends Component {
    
     session=()=>{
         AsyncStorage.setItem('userid',this.state.userid)
-        this.props.navigation.navigate('Home');
+        this.props.navigation.dispatch(StackActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'Home' })
+            ],
+          }))
     }
 
     render(){
         // console.log(this.state.userid);
         return(
-            <ScrollView contentContainerStyle={Styles.contentContainer}>
+            <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={Styles.contentContainer}>
             
             
             <ImageBackground
@@ -104,7 +111,7 @@ class SignIn extends Component {
               </View>
               <View style={{marginLeft: "55%"}}>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPass')}>
-                    <Text style={{color: "#000000"}}>
+                    <Text style={{color: "#000000", fontFamily: 'Poppins'}}>
                         Forgot Password
                     </Text>
                 </TouchableOpacity>
@@ -157,6 +164,7 @@ const Styles = {
         paddingRight: 10,
         alignSelf: 'center',
         borderRadius: 10,
+        backgroundColor: 'white'
     },
     contentContainer: {
         justifyContent: 'center',

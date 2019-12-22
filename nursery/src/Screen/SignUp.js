@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, ImageBackground, TextInput, Image, ScrollView } from 'react-native';
 import axios from 'axios';
-import Button from '../common/Button';
+import ButtonNew from '../common/ButtonNew';
 
 
 class SignUp extends Component {
-
+    
     state = { name: '', lname: '',phone: '', email: '', password: '' }
 
     userRegistration = () => {
@@ -15,7 +15,7 @@ class SignUp extends Component {
         const {email} = this.state;
         const {password} = this.state;
 
-        axios.post('http://203.190.153.20/tinyland/api/Api/register', {
+        axios.post('https://digimonk.co/tinyland/api/Api/register', {
             
                 first_name: name, 
 	            last_name:lname,
@@ -23,15 +23,29 @@ class SignUp extends Component {
 	            email:email,
 	            password:password,
 
-            }).then(function (response){
+            }).then((response) =>{
                 // console.log(response)
                 const data = response['data']
                 const message = data['message']
-                alert(message);
+                const status = data['status']
+                console.log(status)
+
+                if(status == 1){
+                    alert(message);
+                    this.props.navigation.navigate('OtpRegistration',{email:this.state.email});
+                }
+                else{
+                    alert(message)
+                }
+                
             }).catch(function (error){
                 console.log(error);
             })
+    
         }
+     
+          
+     
     
     render(){
         return(
@@ -40,10 +54,10 @@ class SignUp extends Component {
                 source={require('../Images/background_full.png')}
                 style={{width: '100%', height: '100%'}}
             >
-            <ScrollView>
-            <View style={{flex: 1, alignItems: 'center', top: "10%"}}>
+            <ScrollView keyboardShouldPersistTaps='always'>
+            <View style={{alignItems: 'center',marginTop: '10%'}}>
                 <View style={{bottom: "5%"}}>
-                    <Text style={{fontSize: 28, color:"white"}}>Sign Up</Text>
+                    <Text style={{fontSize: 28, color:"white",fontFamily: 'Poppins'}}>Sign Up</Text>
                 </View>
             <View style={Styles.containerStyle}>
                 <TextInput
@@ -77,8 +91,8 @@ class SignUp extends Component {
                         onChangeText={phone => this.setState({ phone })}
                 />
                     <Image
-                        source={require('../Images/name.png')}
-                        style={{width: 20, height: 20, marginLeft: 10}}
+                        source={require('../Images/mobile.png')}
+                        style={{width: 17, height: 30, marginLeft: 10}}
                     />
             </View>
             <View style={Styles.containerStyle}>
@@ -118,16 +132,13 @@ class SignUp extends Component {
                     />
             </View>
 
-            <View style={{marginTop: "15%"}}>
-                    <Button onPress={this.userRegistration}>
+            <View style={{marginTop: "5%",backgroundColor: 'transparent'}}>
+                    <ButtonNew onPress={this.userRegistration}>
                         Submit
-                    {/* <View style={Styles.buttonStyle}>
-                        <Text style={Styles.textStyle}>Submit</Text>
-                    </View> */}
-                    </Button>
+                    </ButtonNew>
             </View>
             
-            <View style={{flexDirection: 'row', marginTop: "10%"}}>
+            <View style={{flexDirection: 'row', marginTop: "5%"}}>
                     <Image
                         style={{margin: 10}}
                         source={require('../Images/facebook.png')}

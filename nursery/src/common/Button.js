@@ -18,7 +18,7 @@ const styles = {
         width: 160,
         alignSelf: 'center',
         backgroundColor: '#008C99',
-        borderRadius: 25,
+        borderRadius: 10,
         height:50,
         alignItems:"center",
         marginLeft: 5,
@@ -32,7 +32,7 @@ const styles = {
         fontWeight: '600',
         paddingTop: 10,
         paddingBottom: 10,
-        
+        fontFamily: 'Poppins'
         
     }
 

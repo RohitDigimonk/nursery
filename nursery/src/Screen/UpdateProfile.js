@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import {Text,View, ImageBackground, Image, TouchableOpacity, ScrollView, TextInput, AsyncStorage} from 'react-native';
+import { StackActions, NavigationActions} from 'react-navigation';
 import Button from '../common/Button';
 class UpdateProfile extends Component{
 
-    loadSession = async () => {
-        this.setState({
-            userid:await AsyncStorage.getItem('userid')
-        })
+    componentDidMount(){
+        this.loadSession().done();
     }
+
+    loadSession = async() => {
+        this.setState({
+          userid:await AsyncStorage.getItem('userid')
+        })
+      }
 
     state = { fname: '', lname: '', phone: '' }
 
@@ -15,8 +20,9 @@ class UpdateProfile extends Component{
         const {fname} = this.state;
         const {lname} = this.state;
         const {phone} = this.state;
+        const {userid} = this.state;
 
-        fetch('https://digimonk.net/poc/poc-api/api/update_profile', {
+        fetch('https://digimonk.co/tinyland/api/Api/profileUpdate', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
@@ -32,18 +38,31 @@ class UpdateProfile extends Component{
 
     phone: phone,
 
-    id: this.state.userid
+    id: userid
  
   })
 
 }).then((response) => response.json())
         .then((responseJson)=> {
-            console.log(responseJson)
+            console.log(userid)
             this.setState({
                 data:responseJson
             })
             // Showing response message coming from server after inserting records.
-                alert(this.state.data['message']);
+                if(this.state.data['status']==1){
+                    alert(this.state.data['message'])
+                    this.props.navigation.dispatch(StackActions.reset({
+                        index: 0,
+                        actions: [
+                          NavigationActions.navigate({ routeName: 'UpdateProfile' })
+                        ],
+                      }))
+                }
+                else{
+                    alert(this.state.data['message'])
+                }    
+            
+            
         }).catch((error) => {
             console.error(error);
         });
@@ -60,10 +79,10 @@ class UpdateProfile extends Component{
             <TouchableOpacity  onPress={() => this.props.navigation.toggleDrawer()}>
             <Image
             source={require('../Images/more.png')}
-            style={{height: 23, width: 29, marginLeft: 10, top: 20}}
+            style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
             />
             </TouchableOpacity>
-            <ScrollView style={{marginTop: '10%'}}>
+            <ScrollView keyboardShouldPersistTaps='always' style={{marginTop: '5%'}}>
             <View style={{marginTop: 40}}>
             <View style={Styles.containerStyle}>
                 <TextInput
@@ -101,8 +120,8 @@ class UpdateProfile extends Component{
                         onChangeText={phone => this.setState({ phone })}
                 />
                     <Image
-                        source={require('../Images/name.png')}
-                        style={{width: 20, height: 20, marginLeft: 10}}
+                        source={require('../Images/mobile.png')}
+                        style={{width: 17, height: 30, marginLeft: 10}}
                     />
             </View>
            

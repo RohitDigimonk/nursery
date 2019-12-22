@@ -16,11 +16,14 @@ class SchoolTypeScroll extends Component{
             
             <ScrollableTabView
             style={{marginTop: 5}}
+            tabBarTextStyle={{fontFamily : 'Poppins'}}
             initialPage={0}
             renderTabBar={() => <ScrollableTabBar
                     // style={{backgroundColor: "lightgrey"}}
                 />}
+            
           >
+              
             <AllSchool tabLabel='All' data={this.props.data} />
             
             <Bilingual tabLabel='Bilingual' data={this.props.data} />

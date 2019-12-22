@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-import { Text, View, AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 class Logout extends Component{
 
-    // logout=async()=>{
-       
-    // }
-    async componentDidMount(){
-        var value = await AsyncStorage.removeItem('userid')
-        if(value == null){
-            this.props.navigation.navigate('SignIn')
-        }
+ 
+    
+    logout=async()=>{
+        // // console.log(this.state.userid)
+        // var value = await AsyncStorage.removeItem('userid')
+        // alert(value)
+        // if(value == null){
+        //     this.props.navigation.navigate('SignIn')
+        // }
+        // return null
+        alert("hello")
     }
 
     render(){
+        this.logout()
         return(
-        null
+         null 
         );
     }
 }

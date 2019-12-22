@@ -11,10 +11,10 @@ class Services extends Component{
             <TouchableOpacity  onPress={() => this.props.navigation.toggleDrawer()}>
             <Image
             source={require('../Images/more.png')}
-            style={{height: 23, width: 29, marginLeft: 10, top: 20}}
+            style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
             />
             </TouchableOpacity>
-            <ScrollView style={{marginTop: '10%'}}>
+            <ScrollView style={{marginTop: '5%'}}>
             <View>
             
                 <Text style={Style.TextStyle}>    
@@ -59,7 +59,8 @@ const Style= {
     fontSize: 18,
     textAlign: 'justify',
     paddingLeft: 5,
-    paddingRight: 5
+    paddingRight: 5,
+    fontFamily : 'Poppins'
     }
 }
 

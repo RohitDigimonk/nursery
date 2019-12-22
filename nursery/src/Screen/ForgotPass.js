@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground, TextInput, Image } from 'react-native';
+import { Text, View, ImageBackground, TextInput, Image, TouchableOpacity } from 'react-native';
 import Button from '../common/Button';
 import axios from 'axios';
 
@@ -9,14 +9,14 @@ class ForgotPass extends Component {
     resetpassword = () => {
             const {email} = this.state
 
-            axios.post('http://203.190.153.20/tinyland/api/Api/forgot_password ', {
+            axios.post('https://digimonk.co/tinyland/api/Api/forgot_password ', {
             email: email
         }).then((response)=>{
-            // console.log(response)
+            console.log(response)
             const data = response['data']
             const status = data['status']
             const message = data['message']
-            // console.log(message);
+            console.log(message);
             if(status==1){
                 alert(message);
                 this.props.navigation.navigate('SignIn')
@@ -33,8 +33,17 @@ class ForgotPass extends Component {
                 source={require('../Images/background_qtr.png')}
                 style={{width: "100%", height: "100%"}}
             >
+            <View>
+            <TouchableOpacity
+            onPress={() => this.props.navigation.goBack()}>
+            <Image
+            source={require('../Images/back.png')}
+            style={{width: 19, height: 33, marginTop: 10, marginLeft: 10}}
+            /> 
+            </TouchableOpacity>
+            </View>
                 <View style={{flex: 1, alignItems: 'center',}}>
-                    <Text style={{fontSize: 28, color:"white", top: 30}}>Forgot Password</Text>
+                    <Text style={{fontSize: 28, color:"white", marginTop: 30,fontFamily: 'Poppins'}}>Forgot Password</Text>
                 </View>
 
                 <View style={{ flex: 1 ,justifyContent: "center", alignItems: 'center', marginBottom: 12, }} >
