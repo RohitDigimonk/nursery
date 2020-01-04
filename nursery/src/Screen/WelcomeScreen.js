@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Image, View, ImageBackground, AsyncStorage} from 'react-native';
 import Button from '../common/Button';
+import {I18nManager} from 'react-native'; 
+import stringsoflanguages from './stringOfLanguage';
+// import {RNRestart} from "react-native-restart"
 import { StackActions, NavigationActions} from 'react-navigation';
 
 class LaunchScreen extends Component {
@@ -16,6 +19,24 @@ class LaunchScreen extends Component {
     //   onBackPress = () => {
     //     return true; 
     //   }
+
+    async componentDidMount(){
+        this.setState({
+            langi:await AsyncStorage.getItem('language')
+          })
+          console.log(this.state.langi)
+          if(this.state.langi=="ar"){
+            I18nManager.allowRTL(true);
+            // NativeModules.DevSettings.reload();  
+          }
+          else{
+            I18nManager.allowRTL(false);
+            // NativeModules.DevSettings.reload();
+          }
+
+        // I18nManager.forceRTL(false);
+        // RNRestart.Restart();
+    }
 
     render() {
         return(
@@ -34,7 +55,7 @@ class LaunchScreen extends Component {
               NavigationActions.navigate({ routeName: 'Home' })
             ],
           }))}>
-                Let's Go
+                {stringsoflanguages.lets}
             </Button>
             </View>
             </ImageBackground>

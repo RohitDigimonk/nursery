@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text,View, TouchableOpacity, ImageBackground, Image, ScrollView} from 'react-native';
 import { withNavigation } from 'react-navigation';
-
+import stringOfLanguage from './stringOfLanguage';
 class Sevenpetal extends Component{
 
     url = "https://digimonk.co/tinyland//uploads/cover_images/"
@@ -57,7 +57,7 @@ class Sevenpetal extends Component{
                              style={{width: 135, height: 32, alignItems: 'center', justifyContent: 'center'}}
                          >
                              <Text style={{fontFamily : 'Poppins',color:'#ffffff'}}>
-                                 Registration Open
+                                 {stringOfLanguage.registrationOpen}
                              </Text>
      
                          </ImageBackground>:<ImageBackground
@@ -65,7 +65,7 @@ class Sevenpetal extends Component{
                              style={{width: 141, height: 36, alignItems: 'center', justifyContent: 'center'}}
                          >
                              <Text style={{fontFamily : 'Poppins',color:'#ffffff'}}>
-                                 Vacation
+                                 {stringOfLanguage.vacant}
                              </Text>
      
                          </ImageBackground>

@@ -38,6 +38,8 @@ target 'nursery' do
 
   pod 'react-native-viewpager', :path => '../node_modules/@react-native-community/viewpager'
 
+  pod 'RCTRestart', :path => '../node_modules/react-native-restart'
+
   target 'nurseryTests' do
     inherit! :search_paths
     # Pods for testing

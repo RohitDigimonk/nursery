@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { StackActions, NavigationActions} from 'react-navigation';
 import {Text,View, ImageBackground, Image, TouchableOpacity, ScrollView, TextInput, AsyncStorage} from 'react-native';
 import Button from '../common/Button';
+import stringsoflanguages from './stringOfLanguage';
 
 class ChangePassword extends Component{
 
@@ -89,21 +90,34 @@ class ChangePassword extends Component{
     render(){
         return(
             <ImageBackground
-            source={require('../Images/plain_background.jpeg')}
+            source={require('../Images/background.png')}
             style={{width: '100%', height: '100%'}}
             >
-            <TouchableOpacity  onPress={() => this.props.navigation.toggleDrawer()}>
-            <Image
-            source={require('../Images/more.png')}
-            style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
-            />
-            </TouchableOpacity>
-            <ScrollView keyboardShouldPersistTaps='always' style={{marginTop: '5%'}}>
+            <ImageBackground
+                  source={require('../Images/topheader.png')}
+                  style={{height:70,width:431}}
+                  >
+                    <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                    onPress={() => this.props.navigation.toggleDrawer({
+                      // params:"20"
+                    })}>
+                    <Image
+                        source={require('../Images/more.png')}
+                        style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
+                    />
+                    </TouchableOpacity>
+                    </View>
+                  </ImageBackground>
+                  <View style={{marginTop: "5%", alignItems: 'center'}}>
+            <Text style={{fontSize: 28, color:"black",fontFamily: 'Poppins'}}>{stringsoflanguages.changepass}</Text>
+                </View>
+            <ScrollView keyboardShouldPersistTaps='always' style={{marginTop: 5}}>
             <View style={{marginTop: 40}}>
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="Old password"
+                        placeholder={stringsoflanguages.opass}
                         placeholderTextColor="#000000"
                         secureTextEntry
                         value = {this.state.opassword}
@@ -118,7 +132,7 @@ class ChangePassword extends Component{
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="New Password"
+                        placeholder={stringsoflanguages.npass}
                         placeholderTextColor="#000000"
                         secureTextEntry
                         value = {this.state.password}
@@ -132,7 +146,7 @@ class ChangePassword extends Component{
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="Confirm Password"
+                        placeholder={stringsoflanguages.confirm}
                         placeholderTextColor="#000000"
                         secureTextEntry
                         value = {this.state.cpassword}
@@ -146,7 +160,7 @@ class ChangePassword extends Component{
            
             <View style={{marginTop: "10%"}}>
                     <Button onPress={this.updatePassword}>
-                        Submit
+                        {stringsoflanguages.submit}
                     {/* <View style={Styles.buttonStyle}>
                         <Text style={Styles.textStyle}>Submit</Text>
                     </View> */}

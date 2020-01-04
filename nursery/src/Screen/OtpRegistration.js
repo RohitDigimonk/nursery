@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Text,View, ImageBackground, TouchableOpacity,TextInput, ScrollView, Image, StyleSheet}from 'react-native';
-import OtpInputs from 'react-native-otp-inputs'
-
+import {Text,View, ImageBackground, TouchableOpacity,TextInput, ScrollView, Image,AsyncStorage, StyleSheet}from 'react-native';
+// import OtpInputs from 'react-native-otp-inputs'
+import stringsoflanguages from './stringOfLanguage';
+import Button from '../common/Button';
 
 class OtpRegistration extends Component{
 
@@ -30,12 +31,7 @@ class OtpRegistration extends Component{
         })
         console.log(this.state.value)
     }
-    // componentDidMount(){
-    //     Immersive.on()
-    //     Immersive.setImmersive(true)
-    //    console.log( this.props.navigation.state.params.value)
-    // }
-
+  
     handleSubmit=()=>{
         console.log(JSON.stringify({
             otpcode:this.state.value,
@@ -58,30 +54,19 @@ class OtpRegistration extends Component{
                }).then((response) => response.json())
                .then((responseJson) => {
                     this.setState( { data: responseJson });
+                    // console.log(this.state.data);
                     this.setState({ myData: this.state.data['data'] })
+                    // console.log(this.state.myData);
+                    this.setState({ userid: this.state.myData['id'] })
+                    console.log(this.state.userid);
                     if(this.state.data['status']==1){
-                         this.props.navigation.navigate("Home");
+                         this.session();
                     }
                     else{
                         this.setState({
                             checkotp:true
                         })
-                        // Alert.alert('Error!',this.state.data['message'],[
-                        //     {
-                        //       'text':'Ok',
-                        //     //   onPress:() => {
-                        //     //       this.props.navigation.navigate("Login");
-                        //     //     }
-                        //       onPress:()=>{
-                        //         this.props.navigation.dispatch(StackActions.reset({
-                        //           index: 0,
-                        //           actions: [
-                        //             NavigationActions.navigate({ routeName: 'Signup' })
-                        //           ],
-                        //         }))
-                        //       }
-                        //     }
-                        //   ])
+                      
                     }
                    
                }).catch((error) => {
@@ -89,25 +74,41 @@ class OtpRegistration extends Component{
                });
     }
 
+    session=()=>{
+        AsyncStorage.setItem('userid',this.state.userid)
+        this.props.navigation.navigate("Home");
+    }
+
     render() {
         return(
             <ImageBackground
-            source={require('../Images/plain_background.jpeg')}
+            source={require('../Images/background.png')}
             style={{width: '100%', height: '100%'}}
             >
-            <TouchableOpacity  onPress={() => this.props.navigation.toggleDrawer()}>
+            <ImageBackground
+            source={require('../Images/topheader.png')}
+            style={{width: 431, height: 70}}
+            >
+            <View>
+            <TouchableOpacity
+            style={{width:19, height: 33, marginTop: 10, marginLeft: 10}}
+            onPress={() => this.props.navigation.goBack()}>
             <Image
-            source={require('../Images/more.png')}
-            style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
-            />
+            source={require('../Images/back.png')}
+            style={{width: 19, height: 33, marginTop: 10, marginLeft: 10}}
+            /> 
             </TouchableOpacity>
-            <ScrollView style={{marginTop: '5%'}}>
+            </View>
+            
+            </ImageBackground>
+            
+            <ScrollView>
             <View>
             
             <View>
                <ScrollView>
                  <View style={styles.container}>
-            <View style={[styles.newConatiner,{backgroundColor:"#fff"}]}>
+            <View>
                 <View style={{width:"100%", flexDirection:'row', alignItems:"center" }}>
                 <TouchableOpacity
              onPress={() => {
@@ -118,38 +119,21 @@ class OtpRegistration extends Component{
                 </View>
                  <View style={{width:'100%', height:"100%", alignItems:"center", marginTop:5,
                   padding: 20, }}>
-                   <View style={{width:"100%", height:180, justifyContent:"center"}}>
-                        <Text style={[styles.titleText,{fontSize:35}]}>Verification Code</Text>
-                        {/* <Text style={[styles.titleText,{fontSize:17}]}>($10,000 and above)</Text> */}
-                       {/* <Button title="Clear" onPress={this.clearOTP} /> */}
-                        {/* <OtpInputs
-                        ref={this.otpRef}
-                        handleChange={code => this.checkOtp(code)}
-                        numberOfInputs={4}
-                        inputStyles={{borderColor:'#f00', borderWidth:1}}
-                       
-                        inputStyles={[styles.otpContainer,{borderColor:this.state.checkotp?"#f00":"#000"}]}
-                        
-                        /> */}
+                   <View style={{width:"100%", height:200, justifyContent:"center"}}>
+                    <Text style={[styles.titleText,{fontSize:16}]}>{stringsoflanguages.vfcode}</Text>
+                     
                        <TextInput
                         style={[styles.otpContainer,{borderColor:this.state.checkotp?"#f00":"#000"}]}
                         onChangeText={code => this.checkOtp(code)}
                        />
                    </View> 
-                   <View style={styles.btnView}>
-                             <TouchableOpacity style={[styles.Whitebtn,{marginBottom:30, backgroundColor:"#DEDF38"}]}
-                              onPress={this.handleSubmit} >
-                                 <Text style={[styles.blackText,{color:"#fff"}]}>Submit</Text>
-                             </TouchableOpacity>
-                             
-                         </View> 
-                   <Text style={{fontSize:18, textAlign:"center", marginTop:20, fontFamily:"Poppins"}}>Please type the verification code sent to your Email.</Text>
                    
-                    {/* <Text style={{fontSize:18, textAlign:"center", marginTop:20, fontFamily:"Raleway-Regular"}}>If the boxes turned ‘red,’ 
-                    double check your verification code. Otherwise please press resend code.</Text> */}
-                   {this.state.checkotp?
+                        <View style={{marginTop: 40}}>
+                    <Button onPress={this.handleSubmit}>{stringsoflanguages.submit}</Button>
+                    </View>
+                    {this.state.checkotp?
                     <View>
-                        <Text style={{color:"#f00"}}>You entered wrong otp. Try again</Text>
+                    <Text style={{color:"#f00"}}>{stringsoflanguages.wrongotp}</Text>
                     {/* <TouchableOpacity>
                         <Text style={{fontSize:18, textAlign:"center", color:"#0FAD01", marginTop:20, fontFamily:"Raleway-Regular"}}>Resend Code</Text>
                     </TouchableOpacity> */}
@@ -246,12 +230,14 @@ const styles= StyleSheet.create({
         // borderColor:"#f00",
         borderWidth:1,
         borderRadius:4,
-        fontSize:22
+        fontSize:22,
+        backgroundColor: 'white',
+        marginTop: 20
     },
     inputbox:{
         width:'100%',
         // flex:1,
-        height:38,
+        height:38,  
         backgroundColor:"#fff",
         borderWidth:2,
         borderColor:"#000",
@@ -305,7 +291,7 @@ const styles= StyleSheet.create({
     },
     titleText:{
         fontSize:20,
-        color:'#000',
+        color:'red',
         // fontWeight:"bold",
         fontFamily:"Poppins",
         textAlign:"center"

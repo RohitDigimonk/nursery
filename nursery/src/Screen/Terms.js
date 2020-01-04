@@ -1,49 +1,73 @@
 import React, {Component} from 'react';
 import {Text,View, ImageBackground, Image, ScrollView, TouchableOpacity} from 'react-native';
+import axios from 'axios';
 
 class Terms extends Component{
+    state={
+        termAndCondition:""
+    }
+
+    componentDidMount = () => {
+        axios.post('https://digimonk.co/tinyland/api/Api/informativePageList')
+        .then((response) => {
+            
+            const data = response['data']
+            console.log(data['data']);
+            var alldata= data['data']
+
+            var termAndCondition= alldata[2]
+            // const description = data.description
+            this.setState({
+                termAndCondition:termAndCondition
+            })
+            // console.log(description);
+
+        })
+    }
+
     render(){
+
+        // console.log(this.state.termAndCondition)
         return(
             <ImageBackground
-            source={require('../Images/plain_background.jpeg')}
+            source={require('../Images/background.png')}
             style={{width: '100%', height: '100%'}}
             >
-            <TouchableOpacity   
+            <ImageBackground
+                  source={require('../Images/topheader.png')}
+                  style={{height:70,width:431}}
+                  >
+                    <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                    
+                    onPress={() => this.props.navigation.toggleDrawer({
+                      // params:"20"
+                    })}>
+                    <Image
+                        source={require('../Images/more.png')}
+                        style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
+                    />
+                    </TouchableOpacity>
+                    {/* <Image
+                        source={require('../Images/logo.png')}
+                        style={{height: 57, width: 85, marginLeft: '24%', marginTop: 5}}
+                    /> */}
+                    </View>
+                  </ImageBackground>  
+            {/* <TouchableOpacity   
             onPress={() => this.props.navigation.toggleDrawer()}>
             <Image
             source={require('../Images/more.png')}
             style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
             />
-            </TouchableOpacity>
-            <ScrollView style={{marginTop: '5%'}}>
+            </TouchableOpacity> */}
+            <ScrollView style={{marginTop: 5}}>
             <View>
             
                 <Text style={Style.TextStyle}>    
-                1. ACCEPTANCE THE USE OF LOREM IPSUM TERMS AND CONDITIONS
-                Your access to and use of Lorem Ipsum (the app) is subject
-                exclusively to these Terms and Conditions. You will not use
-                the app for any purpose that is unlawful or prohibited by these
-                Terms and Conditions. By using the app you are fully accepting the
-                terms, conditions and disclaimers contained in this notice.
-                If you do not accept these Terms and Conditions you must immediately stop using the app.
+                        {this.state.termAndCondition['description']}
                 </Text>
-                <Text style={Style.TextStyle}>
-                2. CREDIT CARD DETAILS
-                All Lorem Ipsum purchases
-                are managed by the individual App Stores (Apple, Google Windows) and Lorem Ipsum will never
-                store your credit card information or make it available to any third parties. Any purchasing
-                information provided will be provided directly from you to the respective App Store and you will be subject to their credit card policies.
-                </Text>
-                <Text style={Style.TextStyle}>
-                3. LEGAL ADVICE
-                The contents of Lorem Ipsum app do not constitute advice and should not be relied upon in making or refraining from making, any decision.
-                All material contained on Lorem Ipsum is provided without any or warranty of any kind. You use the material on Lorem Ipsum at your own discretion
-                </Text>
-                <Text style={Style.TextStyle}>
-                4. LEGAL ADVICE
-                The contents of Lorem Ipsum app do not constitute advice and should not be relied upon in making or refraining from making, any decision.
-                All material contained on Lorem Ipsum is provided without any or warranty of any kind. You use the material on Lorem Ipsum at your own discretion
-                </Text>
+                
             
             </View>
             </ScrollView>

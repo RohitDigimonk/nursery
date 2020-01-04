@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, StyleSheet,ImageBackground,SafeAreaView,Image, ScrollView, AsyncStorage } from 'react-native';
+import { View, StyleSheet,ImageBackground,SafeAreaView,Image, ScrollView, AsyncStorage, } from 'react-native';
 import { StackActions, NavigationActions} from 'react-navigation';
 import PropTypes from 'prop-types';
 // import styles from './styles';
+import {RNRestart} from "react-native-restart"
+import {I18nManager} from 'react-native'; 
+import stringsoflanguages from './stringOfLanguage';
 import MenuButton from '../common/MenuButton/MenuButton';
 
 // console.log(AsyncStorage.getItem('userid'))
@@ -10,13 +13,49 @@ import MenuButton from '../common/MenuButton/MenuButton';
 export default class DrawerContainer extends React.Component {
 
   state={
-    userid:""
+    userid:"",
+    langi:"en"
   }
 
-    componentDidMount(){
+  constructor(props) {
+    super(props);
+    const lang = [
+      { shortform: 'en', longform: 'English' },
+      { shortform: 'hi', longform: 'Hindi' },
+      { shortform: 'ma', longform: 'Marathi' },
+      { shortform: 'ar', longform: 'Arabic' },
+    ];
+    global.lang = lang; 
+  }
+
+    async componentDidMount(){
 
         this.loadSession().done();
-       
+        
+        this.setState({
+          langi:await AsyncStorage.getItem('language')
+        })
+    }
+
+    settext=async(value)=>{
+      // alert(value)
+      AsyncStorage.setItem('language',value)
+      this.setState({
+        langi:await AsyncStorage.getItem('language')
+      })
+      // console.log(await AsyncStorage.getItem('language'))
+      stringsoflanguages.setLanguage(value);
+      
+      this.props.navigation.dispatch(StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'WelcomeScreen' })
+        ],
+      }))
+    
+      // I18nManager.forceRTL(true);
+      // // RNRestart.Restart();
+      // this.props.navigation.closeDrawer();
     }
 
     
@@ -49,7 +88,7 @@ export default class DrawerContainer extends React.Component {
 
   render() {
     this.loadSession().done();
-
+// console.log(this.state.lang)
     // console.log(this.props.navigation.state)
     const { navigation } = this.props;
     return (
@@ -68,7 +107,7 @@ export default class DrawerContainer extends React.Component {
                 <ScrollView>
                
                 <MenuButton
-  title="Home"
+  title={stringsoflanguages.home}
   // source={require('../../../assets/icons/home.png')}
   onPress={() => {
     navigation.navigate('Home');
@@ -77,7 +116,7 @@ export default class DrawerContainer extends React.Component {
 />
 {this.state.userid==null?
 <MenuButton
-  title="Sign In"
+  title={stringsoflanguages.sign}
   
   // source={require('../../../assets/icons/category.png')}
   onPress={() => {
@@ -86,41 +125,9 @@ export default class DrawerContainer extends React.Component {
   }}
 />:null
 }
-<MenuButton
-  title="Terms & Conditions"
-  // source={require('../../../assets/icons/search.png')}
-  onPress={() => {
-    navigation.navigate('Terms');
-    navigation.closeDrawer();
-  }}
-/>
- <MenuButton
-  title="Our Services to Our Partners"
-  // source={require('../../../assets/icons/home.png')}
-  onPress={() => {
-    navigation.navigate('Services');
-    navigation.closeDrawer();
-  }}
-/>
-<MenuButton
-  title="Why My Nursery"
-  // source={require('../../../assets/icons/category.png')}
-  onPress={() => {
-    navigation.navigate('Why');
-    navigation.closeDrawer();
-  }}
-/>
-<MenuButton
-  title="Contact Us"
-  // source={require('../../../assets/icons/search.png')}
-  onPress={() => {
-    navigation.navigate('ContactUs');
-    navigation.closeDrawer();
-  }}
-/>
 {this.state.userid!=null?
  <MenuButton
-  title="Update Profile"
+  title={stringsoflanguages.mypro}
   // source={require('../../../assets/icons/home.png')}
   onPress={() => {
     navigation.navigate('UpdateProfile');
@@ -130,7 +137,7 @@ export default class DrawerContainer extends React.Component {
   }
 {this.state.userid!=null?
  <MenuButton
-  title="Change password"
+  title={stringsoflanguages.changepass}
   // source={require('../../../assets/icons/home.png')}
   onPress={() => {
     navigation.navigate('ChangePassword');
@@ -138,9 +145,56 @@ export default class DrawerContainer extends React.Component {
   }}
 />:null
   }
+
+
+ <MenuButton
+  title={stringsoflanguages.our}
+  // source={require('../../../assets/icons/home.png')}
+  onPress={() => {
+    navigation.navigate('Services');
+    navigation.closeDrawer();
+  }}
+/>
+<MenuButton
+  title={stringsoflanguages.why}
+  // source={require('../../../assets/icons/category.png')}
+  onPress={() => {
+    navigation.navigate('Why');
+    navigation.closeDrawer();
+  }}
+/>
 {this.state.userid!=null?
 <MenuButton
-  title="Logout"
+  title={stringsoflanguages.Contact}
+  // source={require('../../../assets/icons/search.png')}
+  onPress={() => {
+    navigation.navigate('ContactUs');
+    navigation.closeDrawer();
+  }}
+/>:null
+}
+
+
+  <MenuButton
+  title={stringsoflanguages.term}
+  // source={require('../../../assets/icons/search.png')}
+  onPress={() => {
+    navigation.navigate('Terms');
+    navigation.closeDrawer();
+  }}
+/>
+  {this.state.langi=="en"?<MenuButton
+  title="تمويل"
+  // source={require('../../../assets/icons/home.png')}
+  onPress={()=>{this.settext("ar")}}
+/>:<MenuButton
+  title="English"
+  // source={require('../../../assets/icons/home.png')}
+  onPress={()=>{this.settext("en")}}
+/>}
+{this.state.userid!=null?
+<MenuButton
+  title={stringsoflanguages.logout}
   // source={require('../../../assets/icons/search.png')}
   onPress={this.logout}
 />:null

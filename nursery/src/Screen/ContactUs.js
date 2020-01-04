@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 class ContactUs extends Component{
-    state = {message: ''}
+    state = {message: '', fname: '', lname: '', email: ''}
 
 
     
@@ -16,6 +16,8 @@ class ContactUs extends Component{
           userid:await AsyncStorage.getItem('userid')
         })
       }
+
+      
 
       componentDidMount(){
         this.loadSession().done();
@@ -53,21 +55,70 @@ class ContactUs extends Component{
         // console.log(this.state.message);
         return(
             <ImageBackground
-            source={require('../Images/plain_background.jpeg')}
+            source={require('../Images/background.png')}
             style={{width: '100%', height: '100%'}}
             >
-            <TouchableOpacity  onPress={() => this.props.navigation.toggleDrawer()}>
-            <Image
-            source={require('../Images/more.png')}
-            style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
-            />
-            </TouchableOpacity>
-            <ScrollView keyboardShouldPersistTaps='always' style={{marginTop: '5%'}}>
+          <ImageBackground
+                  source={require('../Images/topheader.png')}
+                  style={{height:70,width:431}}
+                  >
+                    <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                    onPress={() => this.props.navigation.toggleDrawer({
+                      // params:"20"
+                    })}>
+                    <Image
+                        source={require('../Images/more.png')}
+                        style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
+                    />
+                    </TouchableOpacity>
+                    </View>
+                  </ImageBackground>
+            
+            <ScrollView keyboardShouldPersistTaps='always' style={{marginTop: 5}}>
             <View style={{marginTop: 40}}>
+            
+            {/* <View style={Styles.containerStyle}>
+                <TextInput
+                        style={{width: '96%',alignSelf: 'flex-start', textAlign: 'justify',fontFamily : 'Poppins' }}
+                        // multiline={true}
+                        placeholder="First Name"
+                        placeholderTextColor="#000000"
+                        // secureTextEntry
+                        value = {this.state.fname}
+                        onChangeText={fname => this.setState({ fname })}
+                />
+                    
+            </View>
+            <View style={Styles.containerStyle}>
+                <TextInput
+                        style={{width: '96%',alignSelf: 'flex-start', textAlign: 'justify',fontFamily : 'Poppins' }}
+                        // multiline={true}
+                        placeholder="Last Name"
+                        placeholderTextColor="#000000"
+                        // secureTextEntry
+                        value = {this.state.lname}
+                        onChangeText={lname => this.setState({ lname })}
+                />
+                    
+            </View>
+
+            <View style={Styles.containerStyle}>
+                <TextInput
+                        style={{width: '96%',alignSelf: 'flex-start', textAlign: 'justify',fontFamily : 'Poppins' }}
+                        // multiline={true}
+                        placeholder="Email ID"
+                        placeholderTextColor="#000000"
+                        // secureTextEntry
+                        value = {this.state.email}
+                        onChangeText={email => this.setState({ email })}
+                />
+                    
+            </View> */}
             
             <View style={Styles.containerStyle2}>
                 <TextInput
-                        style={{width: '96%',alignSelf: 'flex-start', textAlign: 'justify',fontFamily : 'Poppins' }}
+                        style={{width: '96%',marginTop: 5,alignSelf: 'flex-start', textAlign: 'justify',fontFamily : 'Poppins' }}
                         multiline={true}
                         placeholder="Type your message here"
                         placeholderTextColor="#000000"
@@ -78,7 +129,7 @@ class ContactUs extends Component{
                     
             </View>
             <View style={{marginTop: 40}}>
-            <TouchableOpacity onPress={this.sendmessage}>
+            {/* <TouchableOpacity onPress={this.sendmessage}> */}
             {/* <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 30}}>
                 <ImageBackground
                 style={{marginTop: 20, width: 135, height: 32, justifyContent: 'center', alignItems: 'center' }}
@@ -87,8 +138,8 @@ class ContactUs extends Component{
                 <Text style={{fontFamily : 'Poppins', color:'white'}}>Send</Text>
                 </ImageBackground>
             </View> */}
-            <Button>Send</Button>
-            </TouchableOpacity>
+            <Button onPress={this.sendmessage}>Send</Button>
+            {/* </TouchableOpacity> */}
             </View>
             </View>
             </ScrollView>
@@ -103,13 +154,13 @@ const Styles = {
     containerStyle: {
         width: "85%",
         alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        position: 'relative', 
+        // flexDirection: 'row',
+        // justifyContent: 'space-between',
+        // position: 'relative', 
         borderWidth: 1,
         borderColor: '#008C99',
         marginTop: 15,
-        height: 40,
+        height: 45,
         paddingLeft: 10,
         paddingRight: 10,
         alignSelf: 'center',
@@ -135,7 +186,7 @@ const Styles = {
         borderRadius: 10,
         backgroundColor: "white",
         marginBottom: 10,
-        
+        height: 150
     },
 }
 

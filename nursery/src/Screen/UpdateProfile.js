@@ -2,10 +2,14 @@ import React, {Component} from 'react';
 import {Text,View, ImageBackground, Image, TouchableOpacity, ScrollView, TextInput, AsyncStorage} from 'react-native';
 import { StackActions, NavigationActions} from 'react-navigation';
 import Button from '../common/Button';
+import stringsoflanguages from './stringOfLanguage';
+
+
 class UpdateProfile extends Component{
 
     componentDidMount(){
         this.loadSession().done();
+        console.log(StringI)
     }
 
     loadSession = async() => {
@@ -70,24 +74,44 @@ class UpdateProfile extends Component{
         componentDidMount(){
         this.loadSession().done();
         }
+
+       
+
     render(){
+    //     {this.props.ffname}
+    //    console.log(this.props.text)
+    // <ffname />
         return(
             <ImageBackground
-            source={require('../Images/plain_background.jpeg')}
+            source={require('../Images/background.png')}
             style={{width: '100%', height: '100%'}}
             >
-            <TouchableOpacity  onPress={() => this.props.navigation.toggleDrawer()}>
-            <Image
-            source={require('../Images/more.png')}
-            style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
-            />
-            </TouchableOpacity>
-            <ScrollView keyboardShouldPersistTaps='always' style={{marginTop: '5%'}}>
-            <View style={{marginTop: 40}}>
+            <ImageBackground
+                  source={require('../Images/topheader.png')}
+                  style={{height:70,width:431}}
+                  >
+                    <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                    onPress={() => this.props.navigation.toggleDrawer({
+                      // params:"20"
+                    })}>
+                    <Image
+                        source={require('../Images/more.png')}
+                        style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
+                    />
+                    </TouchableOpacity>
+                    </View>
+                  </ImageBackground>
+                  <View style={{marginTop: "5%", alignItems: 'center'}}>
+            <Text style={{fontSize: 28, color:"black",fontFamily: 'Poppins'}}>{stringsoflanguages.updatepro}</Text>
+                </View>
+            
+            <ScrollView keyboardShouldPersistTaps='always' style={{marginTop: 5}}>
+            <View style={{marginTop: 30}}>
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="First Name"
+                        placeholder={stringsoflanguages.first}
                         placeholderTextColor="#000000"
                         value = {this.state.fname}
                         onChangeText={fname => this.setState({ fname })}
@@ -101,7 +125,7 @@ class UpdateProfile extends Component{
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="Last Name"
+                        placeholder={stringsoflanguages.last}
                         placeholderTextColor="#000000"
                         value = {this.state.lname}
                         onChangeText={lname => this.setState({lname})}
@@ -114,7 +138,7 @@ class UpdateProfile extends Component{
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="Phone No."
+                        placeholder={stringsoflanguages.phone}
                         placeholderTextColor="#000000"
                         value = {this.state.phone}
                         onChangeText={phone => this.setState({ phone })}
@@ -127,7 +151,7 @@ class UpdateProfile extends Component{
            
             <View style={{marginTop: "10%"}}>
                     <Button onPress={this.userupdate}>
-                        Submit
+                        {stringsoflanguages.submit}
                     {/* <View style={Styles.buttonStyle}>
                         <Text style={Styles.textStyle}>Submit</Text>
                     </View> */}

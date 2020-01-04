@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ImageBackground, ScrollView, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
-
+import stringOfLanguage from './stringOfLanguage';
 
 class Subscription extends Component{
 
@@ -40,7 +40,7 @@ class Subscription extends Component{
                     source={require('../Images/registration_button.png')}
                     style={{width: 135, height: 32, justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <Text style={{color: '#ffffff', fontSize: 18, fontFamily : 'Poppins'}}>Subscribe</Text>
+    <Text style={{color: '#ffffff', fontSize: 18, fontFamily : 'Poppins'}}>{stringOfLanguage.subscribe}</Text>
                 </ImageBackground>
                 </TouchableOpacity>
                 </View>

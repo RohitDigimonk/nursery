@@ -3,6 +3,8 @@ import { Text, View, ImageBackground, Image, TextInput, TouchableOpacity, AsyncS
 import Button from '../common/Button';
 import { StackActions, NavigationActions} from 'react-navigation';
 import axios from 'axios';
+import stringsoflanguages from './stringOfLanguage';
+
 
 class SignIn extends Component {
 
@@ -19,7 +21,7 @@ class SignIn extends Component {
               password: password
 
         }).then((response)=>{
-            console.log(response);
+            // console.log(response);
             // const data = response['data']
             // const message = data['message']
             // const status = data['status']
@@ -28,8 +30,20 @@ class SignIn extends Component {
             
           
             const data = response['data']
+            const data1 = data['data']
+            // const first_name = data1['first_name']
+            // const lname = data1['last_name']
+            // const email = data1['email']
             const message = data['message']
             const status = data['status']
+            // console.log(message)
+
+            // this.setState({
+            //     ffname:ffname,
+            //     lname:lname,
+            //     email:email
+            // })
+
             // console.log(dataa['id']);
 
             // this.setState({
@@ -69,8 +83,11 @@ class SignIn extends Component {
           }))
     }
 
+    
     render(){
-        // console.log(this.state.userid);
+        
+        // <UpdateProfile ffname={this.state.ffname} />
+        // console.log(this.state.ffname);
         return(
             <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={Styles.contentContainer}>
             
@@ -84,7 +101,7 @@ class SignIn extends Component {
                <View style={Styles.containerStyle}>
                     <TextInput
                         style={{width: '80%', color: "#000000"}}
-                        placeholder="Email"
+                        placeholder={stringsoflanguages.email}
                         placeholderTextColor="#000000"
                         value={this.state.email}                        
                         onChangeText={email => this.setState({ email })}
@@ -96,8 +113,8 @@ class SignIn extends Component {
                 </View>
                 <View style={Styles.containerStyle}>
                     <TextInput
-                        style={{width: '80%'}}
-                        placeholder="Password"
+                        style={{width: '80%',color: "#000000"}}
+                        placeholder={stringsoflanguages.password}
                         placeholderTextColor="#000000"
                         secureTextEntry
                         value={this.state.password}
@@ -112,17 +129,17 @@ class SignIn extends Component {
               <View style={{marginLeft: "55%"}}>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPass')}>
                     <Text style={{color: "#000000", fontFamily: 'Poppins'}}>
-                        Forgot Password
+                        {stringsoflanguages.forgot}
                     </Text>
                 </TouchableOpacity>
              </View>
                 <View style={{flexDirection: 'row', marginTop: 20}}>
                     <Button onPress={() => this.props.navigation.navigate('SignUp')}>
-                        Sign Up
+                        {stringsoflanguages.signup}
                     </Button>
                         
                     <Button onPress={this.login}>
-                        Sign In
+                        {stringsoflanguages.signin}
                     </Button>
                 </View>
                 <View style={{flexDirection: 'row', marginTop: 10}}>
@@ -140,6 +157,7 @@ class SignIn extends Component {
                     />
 
                 </View>
+                
             </View>
             
             </ImageBackground>
@@ -148,6 +166,9 @@ class SignIn extends Component {
         );
     }
 }
+
+
+
 
 const Styles = {
     containerStyle: {
@@ -171,6 +192,9 @@ const Styles = {
         height: "100%"
     }
 }
+
+
+
 
 
 export default SignIn;

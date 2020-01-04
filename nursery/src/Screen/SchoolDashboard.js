@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground, Image, TouchableOpacity, AsyncStorage} from 'react-native';
+import { Text, View, ImageBackground, Image, TouchableOpacity, AsyncStorage, Dimensions} from 'react-native';
 import ScrollBar from './ScrollBar';
-import Carousel from 'react-native-snap-carousel';
+// import Carousel from 'react-native-snap-carousel';
 import axios from 'axios';
+import SwiperFlatList from 'react-native-swiper-flatlist';
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
+// import CustomScrollView from 'custom-scroll-view'
+
+
+
+
+// const AnimatedCustomScrollView = Animated.createAnimatedComponent(CustomScrollView)
+
+
 
 class SchoolDashboard extends Component {
     state = {nurseryList: [], renderData: [], nurseryid: ''}
@@ -57,40 +67,20 @@ class SchoolDashboard extends Component {
     
 
     
-    renderData () {
-        return this.other_images.map(data => 
-        <Text key={data.nursery_master_id}>{data}</Text>
-            );
-        }
-        renderitem = ({ item }) => (
-            <View style={{justifyContent: 'center', alignItems: 'center', flex:1, height: 300, paddingRight: 5, }}>
-                
-        <ImageBackground
-        style={{height: 300, width: 400}}
-        source={{uri:this.slider+item.otherimage}}
-        resizeMode= 'contain'
-        >
-        
-        </ImageBackground>
-        {/* // >{this.slider+item.otherimage}</image> */}
-        </View>
-        );
+    
 
-    // renderItem ({item, index}) {
-    //     return (
-    //         <View style={{justifyContent: 'center', alignItems: 'center', widht: 200, backgroundColor:"#000", height: 200}}>
-                
-    //             <Text>HI test data</Text>
-    //         </View>
-    //     );
-    // }
+ 
 
    render(){
     
     
-    // console.log(this.state.nurseryid);    
+    // console.log(this.other_images);    
 
         return(
+            
+
+
+
             <View style={{flex: 1}}>
             <ImageBackground
             source={require('../Images/background.png')}
@@ -98,10 +88,11 @@ class SchoolDashboard extends Component {
             >
             <ImageBackground
             source={require('../Images/topheader.png')}
-            style={{width: 429, height: 47}}
+            style={{width: 431, height: 70}}
             >
             <View>
             <TouchableOpacity
+            // style={{width:19, height: 33, marginTop: 10, marginLeft: 10}}
             onPress={() => this.props.navigation.goBack()}>
             <Image
             source={require('../Images/back.png')}
@@ -111,21 +102,36 @@ class SchoolDashboard extends Component {
             </View>
             
             </ImageBackground>
+            <View style={Styles.container}>   
+            <SwiperFlatList
+          autoplay
+          autoplayDelay={2}
+          autoplayLoop
+          index={0}
+          showPagination
+        >
+        
+            {
+                this.other_images.map(data=>
+                 <View style={[Styles.child]}>
+                     
+                    
+                <Image source={{uri:this.slider+data.otherimage}}
+                style={{height:"100%", width:"100%", resizeMode:"stretch"}} />
                 
-            
-            <Carousel
-          ref={(c) => { this._carousel = c; }}
-          data={this.other_images}
-          renderItem={this.renderitem}
-          sliderWidth={390}
-          itemWidth={410}
+                </View>
+                )
+            }
+        
           
-        />
+        </SwiperFlatList>
+        </View>
+         
                 
                 
                 <ScrollBar data={this.nurseryList} />
                 
-                </ImageBackground>
+            </ImageBackground>
                 </View>
                 
       
@@ -136,7 +142,7 @@ class SchoolDashboard extends Component {
         );
     }
 }
-
+export const { width, height } = Dimensions.get('window');
 const Styles= {
 
     ImageContainer: {
@@ -150,6 +156,21 @@ const Styles= {
         alignItems: 'center',
   
     },
+    container: {
+        height: 200,
+        backgroundColor: 'white'
+      },
+      child: {
+        height: height * 0.5,
+        width,
+        justifyContent: 'center',
+        alignItems:"center",
+        resizeMode:"contain"
+      },
+      text: {
+        
+        textAlign: 'center'
+      }
    
 }
 

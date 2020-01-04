@@ -5,6 +5,18 @@ import axios from 'axios';
 import SchoolTypeScroll from './SchoolTypeScroll';
 import _ from 'lodash';
 import { StackActions, NavigationActions} from 'react-navigation';
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
+import Bilingual from './Bilingual';
+import Islamic from './Islamic';
+import AllSchool from './AllSchool';
+import Trilingual from './Trilingual';
+import Special from './Special';
+import Sevenpetal from './Sevenpetal';
+import Montessori from './Montessori';
+import stringOfLanguage from './stringOfLanguage';
+// import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
+// import { Colors } from 'react-native/Libraries/NewAppScreen';
 // import Menu, { MenuItem, MenuDivider, Position,stickTo} from "react-native-enhanced-popup-menu";
 // import Popup from './Popup';
 
@@ -23,8 +35,31 @@ class Home extends Component {
    
     showMenu = () => {
       this._menu.show();
+      
+      
     };
-  
+
+    nearBy = () => {
+      this.hideMenu();
+      const {longitude} = this.state;
+      const {latitude} = this.state;
+
+      axios.post('https://digimonk.co/tinyland/api/Api/getNearMeSchool',{
+          latitude : latitude,
+          longtitude: longitude
+      }).then((response) => {
+        // console.log(response);
+        const data2 = response['data']
+        const data = data2['data']
+        // console.log(data);
+        this.setState({
+          nurseryList:data
+        })
+      })
+    }
+
+
+
         state = {nurseryList: []}
         // basestate = this.state.nurseryList
         url = "https://digimonk.co/tinyland//uploads/cover_images/"
@@ -57,6 +92,8 @@ class Home extends Component {
                 // console.log(response.data)
                 const album = response.data
                 var newalbum = album.data
+                var vacantdata = album.data
+                var registrationdata = album.data
                 // const registration = newalbum['school_name']
                 // console.log(registration);
                 
@@ -66,10 +103,52 @@ class Home extends Component {
                 this.setState({
                     data:newalbum
                 })
-                 
+                this.setState({
+                  vacantData: vacantdata
+                })
+                this.setState({
+                  registrationData:registrationdata
+                })
             })
-            
+
+            Geolocation.getCurrentPosition((position) => {
+                  // console.log(position);
+                  var cord = position['coords']
+                  this.setState({
+                    longitude:cord['longitude'],
+                    latitude:cord['latitude']
+                  })
+            })
+
+          //   Geolocation.getCurrentPosition(
+          //     (position) => {
+          //         console.log(position);
+          //         var cord= position['coords']
+          //         this.setState({
+          //           longitude:cord['longitude'],
+          //           latitude:cord['latitude']
+  
+          //         })
+                  
+          //     },
+          //     (error) => {
+          //         // See error code charts below.
+          //         console.log(error.code, error.message);
+          //     },
+          //     { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+          // );
+      
+  
         }
+        // setDefaultNurseryList = () => {
+        //   this.hideMenu();
+        //   var value= _.filter(this.state.nurseryList, { registration_open: "0" })
+        //   this.setState({
+        //    nurseryList:value
+        //   })  
+        // }
+
+
       All=()=>{
         this.hideMenu();
           // this.state.nurseryList
@@ -83,14 +162,15 @@ class Home extends Component {
       }
       vacant=(value)=> {
         this.hideMenu();
-        var value= _.filter(this.state.nurseryList, { registration_open: "0" })
+        
+        var value= _.filter(this.state.vacantData, { registration_open: "0" })
    this.setState({
     nurseryList:value
    })     
       }
       registration=(value)=> {
         this.hideMenu();
-        var value= _.filter(this.state.nurseryList, { registration_open: "1" })
+        var value= _.filter(this.state.registrationData, { registration_open: "1" })
         this.setState({
         nurseryList:value
    }) 
@@ -161,30 +241,34 @@ class Home extends Component {
         }
 
     render() {
-        console.log(this.state.nurseryList);
+        // console.log(this.state.longitude);
       
         return(
         
         <ImageBackground
-        source={require('../Images/plain_background.jpeg')}
+        source={require('../Images/background.png')}
                 style={{width: '100%', height: '100%'}}
                 
         >
-        <View style={{flexDirection: 'row', height: "12%" }}>
+                  <ImageBackground
+                  source={require('../Images/topheader.png')}
+                  style={{height:70,width:431}}
+                  >
+                    <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity  onPress={() => this.props.navigation.toggleDrawer({
-                      params:"20"
+                      // params:"20"
                     })}>
                     <Image
                         source={require('../Images/more.png')}
-                        style={{height: 23, width: 29, marginLeft: 10, top: 20}}
+                        style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
                     />
                     </TouchableOpacity>
                     <Image
                         source={require('../Images/logo.png')}
-                        style={{height: 57, width: 85, marginLeft: '30%'}}
+                        style={{height: 57, width: 85, marginLeft: '24%', marginTop: 5}}
                     />
                     </View>
-                    
+                  </ImageBackground>  
                     <View style={{flexDirection: 'row'}}>
                     
                     <View style={{height: 40, borderWidth: 1, borderRadius: 10, marginTop: 20, marginLeft: 20,marginRight: 5, flexDirection: 'row'}}>
@@ -194,8 +278,10 @@ class Home extends Component {
                         />
                         <TextInput
                             style={{width: "70%",fontSize: 17}}
-                            placeholder= "Search"
+                            placeholder= {stringOfLanguage.searchnurseries}
                             onChangeText={text => this.handleSearch(text)}
+                            // onKeyPress={keyPress => console.log(keyPress)}
+                            // onFocus={() =>alert("hi")}
                         />
                         
                         </View>
@@ -210,14 +296,17 @@ class Home extends Component {
                
             /></TouchableOpacity>}
           >
-            <MenuItem onPress={this.All}>All</MenuItem>
-            <MenuItem onPress={this.vacant}>Vacant</MenuItem>
-            <MenuItem onPress={this.registration}>Registration Open</MenuItem>
+            <MenuItem onPress={this.All}>{stringOfLanguage.all}</MenuItem>
+            <MenuDivider />
+            <MenuItem onPress={this.vacant}>{stringOfLanguage.vacant}</MenuItem>
+            <MenuDivider />
+            <MenuDivider />
+            <MenuItem onPress={this.registration}>{stringOfLanguage.registrationOpen}</MenuItem>
             {/* <MenuItem onPress={this.hideMenu} disabled>
               Menu item 3
             </MenuItem> */}
             <MenuDivider />
-            <MenuItem onPress={this.hideMenu}>Menu item 4</MenuItem>
+            <MenuItem onPress={this.nearBy}>{stringOfLanguage.near}</MenuItem>
           </Menu>      
                         </View>
                         {/* <Menu
@@ -230,59 +319,39 @@ class Home extends Component {
 
                         {/* </Menu> */}
                     </View>
-                    <View style={{alignItems: 'center'}}>
-                        <Text style={{fontSize: 22,fontFamily: 'Poppins'}}>Nurseries</Text>
+                    {/* <View style={{alignItems: 'center'}}>
+                      <Text style={{fontSize: 22,fontFamily: 'Poppins'}}>{stringOfLanguage.Nurseries}</Text>
                         
-                    </View>
-                    
-                    <SchoolTypeScroll data={this.state.nurseryList}  />
-                    
-                    {/* <View style={{flexDirection: 'row', justifyContent: 'space-around'}}> 
-                        <Text style={{color: '#35c3c4'}}>All</Text>
-                        <Text style={{color: '#35c3c4'}}>British</Text>
-                        <Text style={{color: '#35c3c4'}}>Three-language nurseried</Text>
                     </View> */}
-        {/* <ScrollView>   
-        <View style={{marginTop: 10}}>
-        <FlatList
-          vertical
-          showsVerticalScrollIndicator={false}
-          numColumns={1}
-          data={this.state.nurseryList}
-          renderItem={this.renderSchool}
-          keyExtractor={item => `${item.id}`}
-        />
-        </View>
-        </ScrollView> */}
+                    <ScrollableTabView
+            style={{marginTop: 5}}
+            tabBarTextStyle={{fontFamily : 'Poppins', fontSize: 14}}
+            tabBarActiveTextColor={'#008c99'}
+            tabBarUnderlineStyle={{height: 3, backgroundColor: '#008c99'}}
+            initialPage={0}
+            renderTabBar={() => <ScrollableTabBar
+                    // style={{backgroundColor: "transparent"}}
+                />}
+            
+          >
+              
+            <AllSchool tabLabel={stringOfLanguage.all} data={this.state.nurseryList} />
+            
+            <Bilingual tabLabel={stringOfLanguage.bilingual} data={this.state.nurseryList} />
+            <Islamic tabLabel={stringOfLanguage.islamic} data={this.state.nurseryList}/>
+            <Trilingual tabLabel={stringOfLanguage.trilingual} data={this.state.nurseryList} />
+            <Special tabLabel={stringOfLanguage.Special} data={this.state.nurseryList} />
+            <Sevenpetal tabLabel={stringOfLanguage.seven} data={this.state.nurseryList} />
+            <Montessori tabLabel={stringOfLanguage.montessori} data={this.state.nurseryList}/>
+
+            
+            </ScrollableTabView>
+                    {/* <SchoolTypeScroll data={this.state.nurseryList}  /> */}
+                    
         </ImageBackground>
        
         );
     }
 }
-
-// const Styles = {
-//     containerStyle: {
-//         marginTop: 20, 
-//         marginBottom: 20,
-//         marginLeft: 5,
-//         marginRight: 5,
-//         borderWidth: 1,
-//         borderRadius: 5,
-        
-//     },
-//     detailContainer: {
-//         paddingLeft: 20,
-//         height: '100%',
-//         justifyContent: 'flex-end',
-        
-             
-        
-//     },
-//     textContainer: {
-//         fontSize: 20,
-//         paddingBottom: 2,
-        
-//     }
-// }
 
 export default Home;

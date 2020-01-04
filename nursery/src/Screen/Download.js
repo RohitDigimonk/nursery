@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ImageBackground, Image, TouchableOpacity, PermissionsAndroid } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import RNFetchBlob from "react-native-fetch-blob";
+import stringOfLanguage from './stringOfLanguage';
 
 class Download extends Component {
 
@@ -116,7 +117,7 @@ config(options).fetch('GET', document).then((res) => {
                 source={require('../Images/registration_button.png')}
                 style={{width: 135, height: 35, marginTop: 15, alignItems: 'center', marginRight: 10}}
                 >
-                <Text style={{color: '#ffffff',fontFamily : 'Poppins'}}>Download</Text>
+                <Text style={{color: '#ffffff',fontFamily : 'Poppins'}}>{stringOfLanguage.download}</Text>
                 <Image
                 source={require('../Images/download.png')}
                 style={{width: 12, height: 15, marginBottom: 15 }}

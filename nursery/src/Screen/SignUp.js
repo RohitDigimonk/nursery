@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ImageBackground, TextInput, Image, ScrollView } from 'react-native';
 import axios from 'axios';
 import ButtonNew from '../common/ButtonNew';
+import stringsoflanguages from './stringOfLanguage';
 
 
 class SignUp extends Component {
@@ -28,10 +29,10 @@ class SignUp extends Component {
                 const data = response['data']
                 const message = data['message']
                 const status = data['status']
-                console.log(status)
+                // console.log(status)
 
                 if(status == 1){
-                    alert(message);
+                    // alert(message);
                     this.props.navigation.navigate('OtpRegistration',{email:this.state.email});
                 }
                 else{
@@ -57,12 +58,12 @@ class SignUp extends Component {
             <ScrollView keyboardShouldPersistTaps='always'>
             <View style={{alignItems: 'center',marginTop: '10%'}}>
                 <View style={{bottom: "5%"}}>
-                    <Text style={{fontSize: 28, color:"white",fontFamily: 'Poppins'}}>Sign Up</Text>
+            <Text style={{fontSize: 28, color:"white",fontFamily: 'Poppins'}}>{stringsoflanguages.signup}</Text>
                 </View>
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="First Name"
+                        placeholder={stringsoflanguages.first}
                         value = {this.state.name}
                         onChangeText={name => this.setState({ name })}
                 />
@@ -74,7 +75,7 @@ class SignUp extends Component {
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="Last Name"
+                        placeholder={stringsoflanguages.last}
                         value = {this.state.lname}
                         onChangeText={lname => this.setState({lname})}
                 />
@@ -86,7 +87,7 @@ class SignUp extends Component {
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="Phone No."
+                        placeholder={stringsoflanguages.phone}
                         value = {this.state.phone}
                         onChangeText={phone => this.setState({ phone })}
                 />
@@ -98,7 +99,7 @@ class SignUp extends Component {
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="Email ID"
+                        placeholder={stringsoflanguages.emailid}
                         value = {this.state.email}
                         onChangeText={email => this.setState({ email })}
                 />
@@ -110,7 +111,7 @@ class SignUp extends Component {
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="Password"
+                        placeholder={stringsoflanguages.password}
                         value = {this.state.password}
                         onChangeText={password => this.setState({password})}
                         secureTextEntry
@@ -123,7 +124,7 @@ class SignUp extends Component {
             <View style={Styles.containerStyle}>
                 <TextInput
                         style={{width: '80%'}}
-                        placeholder="Confirm Password"
+                        placeholder={stringsoflanguages.confirm}
                         secureTextEntry
                 />
                     <Image
@@ -134,7 +135,7 @@ class SignUp extends Component {
 
             <View style={{marginTop: "5%",backgroundColor: 'transparent'}}>
                     <ButtonNew onPress={this.userRegistration}>
-                        Submit
+                        {stringsoflanguages.submit}
                     </ButtonNew>
             </View>
             

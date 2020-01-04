@@ -20,7 +20,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     fontSize: 16,
     marginLeft: 10,
-    marginTop: 2
+    marginTop: 2,
+    color: 'white',
+    fontWeight: "bold"
   }
 });
 

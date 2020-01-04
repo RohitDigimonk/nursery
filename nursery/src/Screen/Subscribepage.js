@@ -1,8 +1,37 @@
 import React, {Component} from 'react';
 import {Text,View, ImageBackground, TouchableOpacity, Image, ScrollView, TextInput, Button} from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import stringsoflanguages from './stringOfLanguage';
+import PayPal from 'react-native-paypal-wrapper';
+
+
+var radio_props = [
+    {label: <Image
+        source={require('../Images/more.png')}
+        style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
+    />, value: 0 },
+    {label: <Image
+        source={require('../Images/more.png')}
+        style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
+    />, value: 1 },
+    {label: <Image
+        source={require('../Images/more.png')}
+        style={{height: 23, width: 29, marginLeft: 10, marginTop: 20}}
+    />, value: 2 }
+  ];
 
 class Subscribepage extends Component{
+
+    paypal() {
+        PayPal.initialize(PayPal.SANDBOX, 'AW8pIdNP7pDnVrEyfIDXtERPt_KaFqsF2n3soujez9olIXhw5Ci2yLcyidF2Sddj8EdStMz4Rfpaem3r'); // 3 enviroments - NO_NETWORK, SANDBOX, PRODUCTION
+        PayPal.pay({
+          price: '1',
+          currency: 'USD',
+          description: 'Nursery Plan',
+        }).then(confirm => console.log(confirm))
+          .catch(error => console.log(error));
+      }
+
     render(){
         return(
             <View>
@@ -12,11 +41,11 @@ class Subscribepage extends Component{
             >
              <ImageBackground
             source={require('../Images/topheader.png')}
-            style={{width: 429, height: 47}}
+            style={{width: 431, height: 70}}
             >
             <View>
             <TouchableOpacity
-            style={{width: 19, height: 33}}
+            style={{marginTop: 10, marginLeft: 10}}
             onPress={() => this.props.navigation.goBack()}>
             <Image
             source={require('../Images/back.png')}
@@ -36,7 +65,7 @@ class Subscribepage extends Component{
                 >
                     <Text
                     style={Style.textStyle}
-                    >Subscriber Number</Text>
+                    >{stringsoflanguages.subscribeno}</Text>
                     </ImageBackground>
 
                     <TextInput
@@ -54,7 +83,7 @@ class Subscribepage extends Component{
                 >
                     <Text
                     style={Style.textStyle}
-                    >ID Number</Text>
+                    >{stringsoflanguages.idnumber}</Text>
                     </ImageBackground>
                     <TextInput
                     style={Style.inputStyle}
@@ -71,7 +100,7 @@ class Subscribepage extends Component{
                 >
                     <Text
                     style={Style.textStyle}
-                    >Phone Number</Text>
+                    >{stringsoflanguages.phone}</Text>
                     </ImageBackground>
                     <TextInput
                     style={Style.inputStyle}
@@ -88,7 +117,7 @@ class Subscribepage extends Component{
                 >
                     <Text
                     style={{color: 'white', textAlign: 'center'}}
-                    >Area</Text>
+                    >{stringsoflanguages.area}</Text>
                     </ImageBackground>
                     <TextInput
                     style={Style.inputStyle}
@@ -111,32 +140,25 @@ class Subscribepage extends Component{
                 />
             </View>
             <View style={{marginTop: 35, marginLeft: 10, justifyContent: 'center'}}>
-            <View style={{flexDirection: 'row'}}>
-            <CheckBox
-                value={false}
-                disabled={false}
+            
+            <View>
+            <RadioForm
+            radio_props={radio_props}
+            initial={0}
+            labelStyle={{fontSize:22, paddingTop:5}}
+            onPress={(value) => {this.setState({value:value})}}
+
             />
-                <Text style={{fontSize: 30, marginBottom: 10}}>
-                    Paypal
-                </Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-            <CheckBox
-                value={false}
-                disabled={false}
-            />
-                <Text style={{fontSize: 30, marginBottom: 10}}>
-                    Stripe
-                </Text>
-                </View>
+            </View>
+
             </View>
             <View style={{alignItems: 'center', marginTop: 50  }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.paypal}>
                 <ImageBackground
                 style={{width: 269, height: 80, justifyContent: 'center', alignItems: 'center'}}
                 source={require('../Images/orderButton.png')}
                 >
-                    <Text style={{color: 'white', fontSize: 24}}>CREATE ORDER</Text>
+                <Text style={{color: 'white', fontSize: 24}}>{stringsoflanguages.createorder}</Text>
                 </ImageBackground>
                 </TouchableOpacity>
             </View>
@@ -162,7 +184,7 @@ const Style= {
         justifyContent: 'space-around'
     },
     inputStyle: {
-        width: '66%',
+        width: '63%',
         height: 43,
         borderWidth: 0.5,
         borderRadius: 7,

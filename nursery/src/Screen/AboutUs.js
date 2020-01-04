@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Text, View, ImageBackground, Image, ScrollView, Linking, TouchableOpacity } from 'react-native';
-
+import stringOfLanguage from './stringOfLanguage';
 
 
 class AboutUs extends Component {
@@ -53,19 +53,19 @@ class AboutUs extends Component {
             <View style={Styles.containerstyle}>
                 <ImageBackground
                     source={require('../Images/blue.png')}
-                    style={{width: 200, height: 55, justifyContent: 'center', alignItems: 'center'}}
+                    style={{width: 175, height: 55, justifyContent: 'center', alignItems: 'center'}}
                 >
                     <Image
                     source={require('../Images/members.png')}
                     style={{width: 13, height: 16}}
                     />
                     <Text style={Styles.textstyle}>
-                        Management
+                        {stringOfLanguage.management}
                     </Text>
                 </ImageBackground>
                 <ImageBackground
                     source={require('../Images/black.png')}
-                    style={{width: 200, height: 55, justifyContent: 'center', alignItems: 'center'}}
+                    style={{width: 175, height: 55, justifyContent: 'center', alignItems: 'center'}}
                 >
                     
                     <Text style={Styles.textstyle}>
@@ -77,23 +77,23 @@ class AboutUs extends Component {
             <View style={Styles.containerstyle}>
                 <ImageBackground
                     source={require('../Images/blue.png')}
-                    style={{width: 200, height: 55, justifyContent: 'center', alignItems: 'center'}}
+                    style={{width: 175, height: 55, justifyContent: 'center', alignItems: 'center'}}
                 >
                     <Image
                     source={require('../Images/members.png')}
                     style={{width: 13, height: 16}}
                     />
                     <Text style={Styles.textstyle}>
-                        Number Of
+                        {stringOfLanguage.number}
                     </Text>
                 </ImageBackground>
                 <ImageBackground
                     source={require('../Images/black.png')}
-                    style={{width: 200, height: 55, justifyContent: 'center', alignItems: 'center'}}
+                    style={{width: 175, height: 55, justifyContent: 'center', alignItems: 'center'}}
                 >
                     
                     <Text style={Styles.textstyle}>
-                        {this.superviser} Supervisers
+                        {this.superviser} {stringOfLanguage.supervisers}
                     </Text>
                 </ImageBackground>
 
@@ -101,23 +101,23 @@ class AboutUs extends Component {
             <View style={Styles.containerstyle}>
                 <ImageBackground
                     source={require('../Images/blue.png')}
-                    style={{width: 200, height: 55, justifyContent: 'center', alignItems: 'center'}}
+                    style={{width: 175, height: 55, justifyContent: 'center', alignItems: 'center'}}
                 >
                     <Image
                     source={require('../Images/members.png')}
                     style={{width: 13, height: 16}}
                     />
                     <Text style={Styles.textstyle}>
-                        Number of 
+                        {stringOfLanguage.number} 
                     </Text>
                 </ImageBackground>
                 <ImageBackground
                     source={require('../Images/black.png')}
-                    style={{width: 200, height: 55, justifyContent: 'center', alignItems: 'center'}}
+                    style={{width: 175, height: 55, justifyContent: 'center', alignItems: 'center'}}
                 >
                     
                     <Text style={Styles.textstyle}>
-                        {this.Teacher} Teachers
+                        {this.Teacher} {stringOfLanguage.teachers}
                     </Text>
                 </ImageBackground>
 
@@ -125,19 +125,19 @@ class AboutUs extends Component {
             <View style={Styles.containerstyle}>
                 <ImageBackground
                     source={require('../Images/blue.png')}
-                    style={{width: 200, height: 55, justifyContent: 'center', alignItems: 'center'}}
+                    style={{width: 175, height: 55, justifyContent: 'center', alignItems: 'center'}}
                 >
                     <Image
                     source={require('../Images/members.png')}
                     style={{width: 13, height: 16}}
                     />
                     <Text style={Styles.textstyle}>
-                        Methodology
+                        {stringOfLanguage.methodology}
                     </Text>
                 </ImageBackground>
                 <ImageBackground
                     source={require('../Images/black.png')}
-                    style={{width: 200, height: 55, justifyContent: 'center', alignItems: 'center'}}
+                    style={{width: 175, height: 55, justifyContent: 'center', alignItems: 'center'}}
                 >
                     <ScrollView>
                     <Text style={Styles.textstyle}>
@@ -171,8 +171,9 @@ const Styles = {
     containerstyle : {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 5,
-        marginBottom: 5
+        marginTop: 3,
+        marginBottom: 3,
+
     }
 }
 
