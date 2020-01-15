@@ -21,10 +21,8 @@ class UpdateProfile extends Component{
           userid:await AsyncStorage.getItem('userid')
           
         })
-
-        // console.log(this.state.userid)
         Axios.post('https://digimonk.co/tinyland/api/Api/profileInfo',{
-            id: this.state.userid
+            id: 59
         }).then((response) => {
             // console.log(response);
             const data2 = response['data']

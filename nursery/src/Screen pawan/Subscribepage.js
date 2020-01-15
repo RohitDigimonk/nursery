@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Text,View, ImageBackground, TouchableOpacity,Alert, Image, ScrollView, TextInput, Button} from 'react-native';
+import {Text,View, ImageBackground,Alert, TouchableOpacity, Image, ScrollView, TextInput, Button} from 'react-native';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import stringsoflanguages from './stringOfLanguage';
-import { StackActions, NavigationActions} from 'react-navigation';
 import PayPal from 'react-native-paypal-wrapper';
 
 
@@ -151,12 +150,10 @@ class Subscribepage extends Component{
 
             </View>
             <View style={{alignItems: 'center', marginTop: 20  }}>
-                <TouchableOpacity onPress={()=>Alert.alert('hey','message',[
+                <TouchableOpacity onPress={Alert.alert('Hey',[
             {
-              'text':'Ook',
-              
+              'text':'Ok',
               onPress:()=>{
-                  
                 this.props.navigation.dispatch(StackActions.reset({
                   index: 0,
                   actions: [

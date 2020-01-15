@@ -88,11 +88,11 @@ class SchoolDashboard extends Component {
             >
             <ImageBackground
             source={require('../Images/topheader.png')}
-            style={{width: 431, height: 70}}
+            style={{width: 431, height: 60}}
             >
             <View>
             <TouchableOpacity
-            // style={{width:19, height: 33, marginTop: 10, marginLeft: 10}}
+            style={{marginTop: 10, marginLeft: 10, position:'absolute'}}
             onPress={() => this.props.navigation.goBack()}>
             <Image
             source={require('../Images/back.png')}
@@ -102,7 +102,7 @@ class SchoolDashboard extends Component {
             </View>
             
             </ImageBackground>
-            <View style={Styles.container}>   
+             {/* <View style={Styles.container}>   
             <SwiperFlatList
           autoplay
           autoplayDelay={2}
@@ -125,7 +125,8 @@ class SchoolDashboard extends Component {
         
           
         </SwiperFlatList>
-        </View>
+        </View> */}
+           
          
                 
                 

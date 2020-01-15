@@ -11,11 +11,7 @@ class ScrollBar extends Component{
     render(){
         // console.log(this.props.data)
         return(
-    //         <ParallaxScrollView
-    //   backgroundColor="blue"
-    //   contentBackgroundColor="pink"
-    //   parallaxHeaderHeight={300}
-    //   renderForeground={() => (
+            
             <ScrollableTabView
             style={{marginTop: 0}}
             tabBarTextStyle={{fontFamily : 'Poppins', fontSize: 14}}
@@ -33,7 +29,7 @@ class ScrollBar extends Component{
             <Event tabLabel={stringOfLanguage.event} data={this.props.data}/>
             <Download tabLabel={stringOfLanguage.Nurseries} data={this.props.data} />
             </ScrollableTabView>
-            // )}></ParallaxScrollView>
+        
           
         );
     }

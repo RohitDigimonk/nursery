@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
-import { Text, View, ImageBackground, Image, ScrollView, Linking, TouchableOpacity } from 'react-native';
+import { Text, View, ImageBackground, Image, ScrollView, Linking, TouchableOpacity, Dimensions } from 'react-native';
 import stringOfLanguage from './stringOfLanguage';
-
+import SwiperFlatList from 'react-native-swiper-flatlist';
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
 
 class AboutUs extends Component {
+
+    slider = "https://digimonk.co/tinyland/uploads/other_images/"
+    
+    
     //     state = {AboutUs: []}
     // componentDidMount=()=>{
     //     Axios.post('https://digimonk.co/tinyland/api/Api/aboutusByID/',{
@@ -24,6 +29,7 @@ class AboutUs extends Component {
     mapUrl = this.data['mapUrl']
     social = this.data['social']
     mapLink = this.data['mapLink']
+    other_images = this.data['otherImage']
     instagram=""
     // instagram = this.social.split(',')
 
@@ -39,9 +45,37 @@ class AboutUs extends Component {
         // console.log(this.instagram);
         // console.log(this.props.children);
         return(
+            
             <ScrollView>
+                    <View style={Styles.container}>   
+            <SwiperFlatList
+          autoplay
+          autoplayDelay={2}
+          autoplayLoop
+          index={0}
+          showPagination
+        >
+        
+            {
+                this.other_images.map(data=>
+                 <View style={[Styles.child]}>
+                     
+                    
+                <Image source={{uri:this.slider+data.otherimage}}
+                style={{height:"100%", width:"100%", resizeMode:"stretch"}} />
+                
+                </View>
+                )
+            }
+        
+          
+        </SwiperFlatList>
+        </View>
+
+        
+
             <View style={{marginTop: 10, marginBottom: 10, paddingLeft: 5, paddingRight: 5}}>
-              <Text style={{textAlign: 'justify',fontFamily : 'Poppins',marginRight:5}}>  {this.props.data['about_school']} </Text>
+              <Text style={{textAlign: 'justify',fontFamily : 'Poppins',marginRight:5}}>{this.props.data['about_school']}</Text>
             </View>
             <View>
                {
@@ -158,7 +192,7 @@ class AboutUs extends Component {
         );
     }
 }
-
+export const { width, height } = Dimensions.get('window');
 const Styles = {
     textstyle : {
         color: '#ffffff',
@@ -174,7 +208,18 @@ const Styles = {
         marginTop: 3,
         marginBottom: 3,
 
-    }
+    },
+    container: {
+        height: 200,
+        backgroundColor: 'white'
+      },
+    child: {
+        height: height * 0.5,
+        width,
+        justifyContent: 'center',
+        alignItems:"center",
+        resizeMode:"contain"
+      },
 }
 
 export default AboutUs;

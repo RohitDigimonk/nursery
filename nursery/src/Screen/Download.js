@@ -103,7 +103,7 @@ config(options).fetch('GET', document).then((res) => {
         console.log(this.nurseryDoc)
         return(
             <ImageBackground
-            source={require('../Images/dashboard_background.png')}
+            source={require('../Images/background.png')}
             style={{width: "100%", height: "100%"}}
             >
                 { this.nurseryDoc.map(value =>
